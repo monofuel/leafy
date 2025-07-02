@@ -320,7 +320,7 @@ proc post*(client: GiteaClient, path: string, body: string): Response =
 
 proc dispatchWorkflow*(client: GiteaClient, owner: string, repo: string,
                        workflow: string, gitRef: string = "main",
-                       inputs: Table[string, string] = initTable[string, string]()): bool =
+                       inputs: Table[string, string] = initTable[string, string]()) =
   ## Trigger a GitHub-style actions workflow via the `workflow_dispatch` event.
   ##
   ## Args:
@@ -330,8 +330,6 @@ proc dispatchWorkflow*(client: GiteaClient, owner: string, repo: string,
   ##             YAML file name (e.g. "build.yml").
   ##   gitRef:  The git reference (branch or tag) to use for the dispatch.
   ##   inputs:  Optional key/value inputs defined in the workflow file.
-  ##
-  ## Returns `true` if the server acknowledged the request (2xx status).
 
   var payload = %*{ "ref": gitRef }
 
@@ -341,9 +339,7 @@ proc dispatchWorkflow*(client: GiteaClient, owner: string, repo: string,
       inputsNode[key] = %*val
     payload["inputs"] = inputsNode
 
-  let resp = client.post(&"/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches", $payload)
-
-  return resp.code in [200, 201, 204]
+  discard client.post(&"/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches", $payload)
 
 proc put*(client: GiteaClient, path: string, body: string): Response =
   ## Make a PUT request to the Gitea API
@@ -528,18 +524,14 @@ proc createPullRequest*(client: GiteaClient, owner: string, repo: string, payloa
   return fromJson(resp.body, GiteaPullRequest)
 
 proc mergePullRequest*(client: GiteaClient, owner: string, repo: string, prNumber: int, 
-                      mergeMethod: string = "merge", title: string = "", message: string = ""): bool =
+                      mergeMethod: string = "merge", title: string = "", message: string = "") =
   ## Merge a pull request
   let payload = %*{
     "Do": mergeMethod,
     "MergeTitleField": title,
     "MergeMessageField": message
   }
-  try:
-    let resp = client.post(&"/repos/{owner}/{repo}/pulls/{prNumber}/merge", $payload)
-    return resp.code == 200
-  except:
-    return false
+  discard client.post(&"/repos/{owner}/{repo}/pulls/{prNumber}/merge", $payload)
 
 # ===== COMMENT API =====
 
