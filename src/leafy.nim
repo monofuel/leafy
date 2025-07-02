@@ -308,11 +308,42 @@ proc post*(client: GiteaClient, path: string, body: string): Response =
 
   let url = client.baseUrl & ApiPathPrefix & path
   let resp = client.curly.post(url, headers, body)
-  
-  if resp.code notin [200, 201]:
+
+  # Some endpoints (e.g. workflow dispatch) legitimately respond with 204 (No Content),
+  # so we treat that as a successful response as well.
+  if resp.code notin [200, 201, 204]:
     raise newException(GiteaError, &"Gitea API request failed: {resp.code} - {resp.body}")
-  
+
   return resp
+
+# ===== ACTIONS / WORKFLOWS API =====
+
+proc dispatchWorkflow*(client: GiteaClient, owner: string, repo: string,
+                       workflow: string, gitRef: string = "main",
+                       inputs: Table[string, string] = initTable[string, string]()): bool =
+  ## Trigger a GitHub-style actions workflow via the `workflow_dispatch` event.
+  ##
+  ## Args:
+  ##   owner:   Repository owner.
+  ##   repo:    Repository name.
+  ##   workflow: The workflow identifier – either the numeric workflow ID or the
+  ##             YAML file name (e.g. "build.yml").
+  ##   gitRef:  The git reference (branch or tag) to use for the dispatch.
+  ##   inputs:  Optional key/value inputs defined in the workflow file.
+  ##
+  ## Returns `true` if the server acknowledged the request (2xx status).
+
+  var payload = %*{ "ref": gitRef }
+
+  if inputs.len > 0:
+    var inputsNode = %*{}
+    for key, val in inputs:
+      inputsNode[key] = %*val
+    payload["inputs"] = inputsNode
+
+  let resp = client.post(&"/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches", $payload)
+
+  return resp.code in [200, 201, 204]
 
 proc put*(client: GiteaClient, path: string, body: string): Response =
   ## Make a PUT request to the Gitea API
