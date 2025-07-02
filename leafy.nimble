@@ -1,11 +1,11 @@
-version     = "0.1.0"
+version     = "1.0.0"
 author      = "Monofuel"
 description = "Gitea API client library for Nim"
 license     = "MIT"
 
 srcDir = "src"
 
-requires "nim >= 1.6.0"
+requires "nim >= 2.0.0"
 requires "curly"
 requires "jsony"
 
