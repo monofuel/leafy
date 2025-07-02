@@ -1,0 +1,24 @@
+name: Github Actions
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: jiro4989/setup-nim-action@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Cache nimble packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nimble
+        key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
+        restore-keys: |
+          ${{ runner.os }}-nimble-
+    - run: nimble install -y
+    - run: nimble test
+    
