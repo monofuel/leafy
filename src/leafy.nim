@@ -235,6 +235,9 @@ type
     due_on*: Option[string]
     state*: Option[string]
 
+  AddLabelsPayload* = ref object
+    labels*: seq[string]
+
   GiteaClient* = ref object
     baseUrl*: string
     token*: string
@@ -491,7 +494,10 @@ proc createIssue*(client: GiteaClient, owner: string, repo: string, payload: Cre
 proc editIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, payload: EditIssuePayload): GiteaIssue =
   ## Edit an existing issue
   let jsonBody = toJson(payload)
+  echo &"Editing issue {issueNumber} with payload: {jsonBody}"
+  echo &"URL:" & client.baseUrl & ApiPathPrefix & &"/repos/{owner}/{repo}/issues/{issueNumber}"
   let resp = client.patch(&"/repos/{owner}/{repo}/issues/{issueNumber}", jsonBody)
+  echo &"Response: {resp.body}"
   return fromJson(resp.body, GiteaIssue)
 
 proc closeIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int): GiteaIssue =
@@ -584,6 +590,12 @@ proc editLabel*(client: GiteaClient, owner: string, repo: string, labelId: int, 
 proc deleteLabel*(client: GiteaClient, owner: string, repo: string, labelId: int) =
   ## Delete a label
   discard client.delete(&"/repos/{owner}/{repo}/labels/{labelId}")
+
+proc addLabelsToIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, labels: seq[string]) =
+  ## Add labels to an issue using the dedicated labels API
+  let payload = AddLabelsPayload(labels: labels)
+  let jsonBody = toJson(payload)
+  discard client.post(&"/repos/{owner}/{repo}/issues/{issueNumber}/labels", jsonBody)
 
 # ===== MILESTONE API =====
 
