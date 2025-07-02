@@ -55,7 +55,9 @@
   <details open>
     <summary><a class="reference reference-toplevel" href="#7" id="57">Types</a></summary>
     <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#CreateCommentPayload" title="CreateCommentPayload = ref object
+      <li><a class="reference" href="#AddLabelsPayload" title="AddLabelsPayload = ref object
+  labels*: seq[string]">AddLabelsPayload</a></li>
+<li><a class="reference" href="#CreateCommentPayload" title="CreateCommentPayload = ref object
   body*: string">CreateCommentPayload</a></li>
 <li><a class="reference" href="#CreateIssuePayload" title="CreateIssuePayload = ref object
   title*: string
@@ -281,6 +283,12 @@
 <li><a class="reference" href="#%24%2CGiteaPullRequest" title="`$`(pr: GiteaPullRequest): string">`$`(pr: GiteaPullRequest): string</a></li>
 
 </ul>
+<ul class="simple nested-toc-section">addLabelsToIssue
+  <li><a class="reference" href="#addLabelsToIssue%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cseq%5Bstring%5D" title="addLabelsToIssue(client: GiteaClient; owner: string; repo: string;
+                 issueNumber: int; labels: seq[string])">addLabelsToIssue(client: GiteaClient; owner: string; repo: string;
+                 issueNumber: int; labels: seq[string])</a></li>
+
+</ul>
 <ul class="simple nested-toc-section">checkRepository
   <li><a class="reference" href="#checkRepository%2CGiteaClient%2Cstring%2Cstring" title="checkRepository(client: GiteaClient; owner: string; repo: string): bool">checkRepository(client: GiteaClient; owner: string; repo: string): bool</a></li>
 
@@ -355,6 +363,14 @@
 </ul>
 <ul class="simple nested-toc-section">deleteRepository
   <li><a class="reference" href="#deleteRepository%2CGiteaClient%2Cstring%2Cstring" title="deleteRepository(client: GiteaClient; owner: string; repo: string)">deleteRepository(client: GiteaClient; owner: string; repo: string)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">dispatchWorkflow
+  <li><a class="reference" href="#dispatchWorkflow%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2CTable%5Bstring%2Cstring%5D" title="dispatchWorkflow(client: GiteaClient; owner: string; repo: string;
+                 workflow: string; gitRef: string = &quot;main&quot;;
+                 inputs: Table[string, string] = initTable[string, string]())">dispatchWorkflow(client: GiteaClient; owner: string; repo: string;
+                 workflow: string; gitRef: string = &quot;main&quot;;
+                 inputs: Table[string, string] = initTable[string, string]())</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">editIssue
@@ -506,9 +522,9 @@
 <ul class="simple nested-toc-section">mergePullRequest
   <li><a class="reference" href="#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring" title="mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;): bool">mergePullRequest(client: GiteaClient; owner: string; repo: string;
+                 title: string = &quot;&quot;; message: string = &quot;&quot;)">mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;): bool</a></li>
+                 title: string = &quot;&quot;; message: string = &quot;&quot;)</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">newGiteaClient
@@ -557,7 +573,18 @@
     <div class="section" id="7">
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
-    <div id="CreateCommentPayload">
+    <div id="AddLabelsPayload">
+  <dt><pre><a href="leafy.html#AddLabelsPayload"><span class="Identifier">AddLabelsPayload</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Identifier">labels</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span></pre></dt>
+  <dd>
+    
+    
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L238" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L238" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+
+  </dd>
+</div>
+<div id="CreateCommentPayload">
   <dt><pre><a href="leafy.html#CreateCommentPayload"><span class="Identifier">CreateCommentPayload</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
   <span class="Identifier">body</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
   <dd>
@@ -691,8 +718,8 @@
   <dd>
     
     
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L238" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L238" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L241" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L241" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -969,8 +996,8 @@
   <dd>
     
     Format an issue for display
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L630" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L630" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L665" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L665" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -979,8 +1006,23 @@
   <dd>
     
     Format a pull request for display
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L654" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L654" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L689" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L689" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+
+  </dd>
+</div>
+
+</div>
+<div id="addLabelsToIssue-procs-all">
+  <div id="addLabelsToIssue,GiteaClient,string,string,int,seq[string]">
+  <dt><pre><span class="Keyword">proc</span> <a href="#addLabelsToIssue%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cseq%5Bstring%5D"><span class="Identifier">addLabelsToIssue</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
+                      <span class="Identifier">issueNumber</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">labels</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    Add labels to an issue using the dedicated labels API
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L594" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L594" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -993,8 +1035,8 @@
   <dd>
     
     Check if a repository exists and is accessible
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L384" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L384" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L414" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L414" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1006,8 +1048,8 @@
   <dd>
     
     Clean up the Gitea client
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L282" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L282" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L285" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L285" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1022,8 +1064,8 @@
   <dd>
     
     Close an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L470" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L470" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L503" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L503" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1038,8 +1080,8 @@
   <dd>
     
     Create a new issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L458" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L458" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L488" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L488" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1054,8 +1096,8 @@
   <dd>
     
     Create a comment on an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L521" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L521" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L550" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L550" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1070,8 +1112,8 @@
   <dd>
     
     Create a new label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L549" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L549" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L578" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L578" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1086,8 +1128,8 @@
   <dd>
     
     Create a new milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L578" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L578" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L613" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L613" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1102,8 +1144,8 @@
   <dd>
     
     Create a new repository for an organization
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L419" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L419" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L449" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L449" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1118,8 +1160,8 @@
   <dd>
     
     Create a new pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L493" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L493" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L526" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L526" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1133,8 +1175,8 @@
   <dd>
     
     Create a new repository for the authenticated user
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L413" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L413" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L443" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L443" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1147,8 +1189,8 @@
   <dd>
     
     Make a DELETE request to the Gitea API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L349" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L349" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L379" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L379" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1162,8 +1204,8 @@
   <dd>
     
     Delete a comment
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L533" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L533" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L562" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L562" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1176,8 +1218,8 @@
   <dd>
     
     Delete a label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L561" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L561" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L590" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L590" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1191,8 +1233,8 @@
   <dd>
     
     Delete a milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L584" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L584" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L619" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L619" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1205,8 +1247,26 @@
   <dd>
     
     Delete a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L425" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L425" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L455" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L455" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+
+  </dd>
+</div>
+
+</div>
+<div id="dispatchWorkflow-procs-all">
+  <div id="dispatchWorkflow,GiteaClient,string,string,string,string,Table[string,string]">
+  <dt><pre><span class="Keyword">proc</span> <a href="#dispatchWorkflow%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2CTable%5Bstring%2Cstring%5D"><span class="Identifier">dispatchWorkflow</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
+                      <span class="Identifier">workflow</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">gitRef</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;main&quot;</span><span class="Other">;</span> <span class="Identifier">inputs</span><span class="Other">:</span> <span class="Identifier">Table</span><span class="Other">[</span>
+    <span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">initTable</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">,</span> <span class="Identifier">string</span><span class="Other">]</span><span class="Other">(</span><span class="Other">)</span><span class="Other">)</span> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    <p>Trigger a GitHub-style actions workflow via the <tt class="docutils literal"><span class="pre"><span class="Identifier">workflow_dispatch</span></span></tt> event.</p>
+<p>Args: owner:   Repository owner. repo:    Repository name. workflow: The workflow identifier – either the numeric workflow ID or the YAML file name (e.g. &quot;build.yml&quot;). gitRef:  The git reference (branch or tag) to use for the dispatch. inputs:  Optional key/value inputs defined in the workflow file.</p>
+
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L324" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L324" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1221,8 +1281,8 @@
   <dd>
     
     Edit an existing issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L464" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L464" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L494" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L494" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1237,8 +1297,8 @@
   <dd>
     
     Edit a comment
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L527" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L527" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L556" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L556" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1253,8 +1313,8 @@
   <dd>
     
     Edit a label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L555" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L555" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L584" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L584" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1269,8 +1329,8 @@
   <dd>
     
     Fork a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L429" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L429" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L459" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L459" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1283,8 +1343,8 @@
   <dd>
     
     Make a GET request to the Gitea API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L286" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L286" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L289" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L289" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1298,8 +1358,8 @@
   <dd>
     
     Get the authenticated user
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L366" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L366" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L396" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L396" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1313,8 +1373,8 @@
   <dd>
     
     Get a specific issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L453" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L453" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L483" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L483" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1328,8 +1388,8 @@
   <dd>
     
     Get a specific label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L544" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L544" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L573" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L573" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1343,8 +1403,8 @@
   <dd>
     
     Get the latest release
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L606" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L606" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L641" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L641" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1359,8 +1419,8 @@
   <dd>
     
     Get a specific milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L573" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L573" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L608" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L608" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1374,8 +1434,8 @@
   <dd>
     
     Get an organization
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L618" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L618" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L653" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L653" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1390,8 +1450,8 @@
   <dd>
     
     Get a specific pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L488" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L488" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L521" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L521" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1405,8 +1465,8 @@
   <dd>
     
     Get a specific release
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L596" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L596" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L631" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L631" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1421,8 +1481,8 @@
   <dd>
     
     Get a release by tag name
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L601" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L601" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L636" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L636" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1436,8 +1496,8 @@
   <dd>
     
     Get a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L393" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L393" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L423" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L423" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1451,8 +1511,8 @@
   <dd>
     
     Get a user by username
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L371" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L371" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L401" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L401" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1467,8 +1527,8 @@
   <dd>
     
     List repositories for the authenticated user
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L403" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L403" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L433" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L433" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1483,8 +1543,8 @@
   <dd>
     
     List comments for an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L515" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L515" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L544" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L544" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1501,8 +1561,8 @@
   <dd>
     
     List issues from a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L439" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L439" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L469" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L469" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1516,8 +1576,8 @@
   <dd>
     
     List all labels for a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L539" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L539" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L568" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L568" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1532,8 +1592,8 @@
   <dd>
     
     List milestones for a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L567" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L567" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L602" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L602" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1548,8 +1608,8 @@
   <dd>
     
     List members of an organization
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L623" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L623" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L658" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L658" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1565,8 +1625,8 @@
   <dd>
     
     List repositories for an organization
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L408" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L408" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L438" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L438" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1580,8 +1640,8 @@
   <dd>
     
     List organizations for the authenticated user
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L613" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L613" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L648" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L648" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1597,8 +1657,8 @@
   <dd>
     
     List pull requests from a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L482" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L482" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L515" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L515" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1613,8 +1673,8 @@
   <dd>
     
     List releases for a repository
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L590" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L590" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L625" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L625" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1629,8 +1689,8 @@
   <dd>
     
     List repositories for a user
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L398" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L398" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L428" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L428" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1640,13 +1700,13 @@
   <div id="mergePullRequest,GiteaClient,string,string,int,string,string,string">
   <dt><pre><span class="Keyword">proc</span> <a href="#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring"><span class="Identifier">mergePullRequest</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
                       <span class="Identifier">prNumber</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">mergeMethod</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;merge&quot;</span><span class="Other">;</span>
-                      <span class="Identifier">title</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">message</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+                      <span class="Identifier">title</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">message</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Merge a pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L499" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L499" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L532" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L532" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1661,8 +1721,8 @@
     <p>Create a new Gitea API client Will use the provided token, or look for the GITEA_TOKEN environment variable.</p>
 <p>Args: baseUrl: The base URL of your Gitea instance (e.g., &quot;<a class="reference external" href="https://gitea.example.com">https://gitea.example.com</a>&quot;) token: Optional API token for authentication</p>
 
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L265" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L265" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L268" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L268" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1675,8 +1735,8 @@
   <dd>
     
     Make a PATCH request to the Gitea API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L333" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L333" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L363" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L363" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1689,8 +1749,8 @@
   <dd>
     
     Make a POST request to the Gitea API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L301" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L301" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L304" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L304" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1703,8 +1763,8 @@
   <dd>
     
     Make a PUT request to the Gitea API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L317" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L317" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L347" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L347" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1719,8 +1779,8 @@
   <dd>
     
     Reopen an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L475" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L475" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L508" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L508" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1735,8 +1795,8 @@
   <dd>
     
     Search for users
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L376" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L376" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L406" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L406" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1752,7 +1812,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2025-07-02 03:05:03 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2025-07-02 06:49:14 UTC</small>
       </div>
     </div>
   </div>

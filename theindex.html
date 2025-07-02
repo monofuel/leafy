@@ -32,6 +32,16 @@
           <li><a class="reference external"
           data-doc-search-tag="leafy: proc `$`(pr: GiteaPullRequest): string" href="leafy.html#%24%2CGiteaPullRequest">leafy: proc `$`(pr: GiteaPullRequest): string</a></li>
           </ul></dd>
+<dt><a name="AddLabelsPayload" href="#AddLabelsPayload"><span>AddLabelsPayload:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: type AddLabelsPayload" href="leafy.html#AddLabelsPayload">leafy: type AddLabelsPayload</a></li>
+          </ul></dd>
+<dt><a name="addLabelsToIssue" href="#addLabelsToIssue"><span>addLabelsToIssue:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc addLabelsToIssue(client: GiteaClient; owner: string; repo: string;
+                 issueNumber: int; labels: seq[string])" href="leafy.html#addLabelsToIssue%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cseq%5Bstring%5D">leafy: proc addLabelsToIssue(client: GiteaClient; owner: string; repo: string;
+                 issueNumber: int; labels: seq[string])</a></li>
+          </ul></dd>
 <dt><a name="ApiPathPrefix" href="#ApiPathPrefix"><span>ApiPathPrefix:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: const ApiPathPrefix" href="leafy.html#ApiPathPrefix">leafy: const ApiPathPrefix</a></li>
@@ -135,6 +145,14 @@
 <dt><a name="deleteRepository" href="#deleteRepository"><span>deleteRepository:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc deleteRepository(client: GiteaClient; owner: string; repo: string)" href="leafy.html#deleteRepository%2CGiteaClient%2Cstring%2Cstring">leafy: proc deleteRepository(client: GiteaClient; owner: string; repo: string)</a></li>
+          </ul></dd>
+<dt><a name="dispatchWorkflow" href="#dispatchWorkflow"><span>dispatchWorkflow:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc dispatchWorkflow(client: GiteaClient; owner: string; repo: string;
+                 workflow: string; gitRef: string = &quot;main&quot;;
+                 inputs: Table[string, string] = initTable[string, string]())" href="leafy.html#dispatchWorkflow%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2CTable%5Bstring%2Cstring%5D">leafy: proc dispatchWorkflow(client: GiteaClient; owner: string; repo: string;
+                 workflow: string; gitRef: string = &quot;main&quot;;
+                 inputs: Table[string, string] = initTable[string, string]())</a></li>
           </ul></dd>
 <dt><a name="editIssue" href="#editIssue"><span>editIssue:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -338,9 +356,9 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;): bool" href="leafy.html#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring">leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
+                 title: string = &quot;&quot;; message: string = &quot;&quot;)" href="leafy.html#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring">leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;): bool</a></li>
+                 title: string = &quot;&quot;; message: string = &quot;&quot;)</a></li>
           </ul></dd>
 <dt><a name="newGiteaClient" href="#newGiteaClient"><span>newGiteaClient:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -376,7 +394,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2025-07-02 03:05:03 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2025-07-02 06:49:14 UTC</small>
       </div>
     </div>
   </div>
