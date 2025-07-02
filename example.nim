@@ -46,9 +46,9 @@ proc main() =
           echo &"  #{issue.number}: {issue.title}"
           echo &"    Author: {issue.user.login}"
           echo &"    Created: {issue.created_at}"
-          if issue.labels.len > 0:
+          if issue.labels.isSome and issue.labels.get().len > 0:
             echo "    Labels: "
-            for label in issue.labels:
+            for label in issue.labels.get():
               echo &"      - {label.name} ({label.color})"
           echo ""
           
