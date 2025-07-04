@@ -200,7 +200,6 @@ type
     assignee*: Option[string]
     assignees*: Option[seq[string]]
     milestone*: Option[int]
-    labels*: Option[seq[int]]
     state*: Option[string]
     unset_due_date*: Option[bool]
     due_date*: Option[string]
@@ -596,6 +595,25 @@ proc addLabelsToIssue*(client: GiteaClient, owner: string, repo: string, issueNu
   let payload = AddLabelsPayload(labels: labels)
   let jsonBody = toJson(payload)
   discard client.post(&"/repos/{owner}/{repo}/issues/{issueNumber}/labels", jsonBody)
+
+proc removeLabelFromIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, labelId: int) =
+  ## Remove a specific label from an issue using the label ID
+  discard client.delete(&"/repos/{owner}/{repo}/issues/{issueNumber}/labels/{labelId}")
+
+proc removeLabelsFromIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, labelNames: seq[string]) =
+  ## Remove specific labels from an issue by name
+  if labelNames.len == 0:
+    return
+  
+  # Get all labels in the repository to find IDs
+  let allLabels = client.listLabels(owner, repo)
+  
+  # Remove each label by ID
+  for labelName in labelNames:
+    for repoLabel in allLabels:
+      if repoLabel.name.toLowerAscii == labelName.toLowerAscii:
+        client.removeLabelFromIssue(owner, repo, issueNumber, repoLabel.id)
+        break
 
 # ===== MILESTONE API =====
 

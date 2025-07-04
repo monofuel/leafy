@@ -1,4 +1,4 @@
-version     = "1.1.0"
+version     = "1.2.0"
 author      = "Monofuel"
 description = "Gitea API client library for Nim"
 license     = "MIT"
