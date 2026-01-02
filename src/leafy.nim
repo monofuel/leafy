@@ -647,6 +647,21 @@ proc listLabels*(client: GiteaClient, owner: string, repo: string, page: int = 1
   let resp = client.get(&"/repos/{owner}/{repo}/labels?page={page}&limit={limit}")
   return fromJson(resp.body, seq[GiteaLabel])
 
+proc getAllLabels*(client: GiteaClient, owner: string, repo: string): seq[GiteaLabel] =
+  ## Get all labels for a repository, handling pagination.
+  result = @[]
+  var page = 1
+  const pageLimit = 50  # Gitea API maximum page size is 50
+  
+  while true:
+    let pageLabels = client.listLabels(owner, repo, page=page, limit=pageLimit)
+    if pageLabels.len == 0:
+      break
+    result.add(pageLabels)
+    if pageLabels.len < pageLimit:
+      break
+    inc page
+
 proc getLabel*(client: GiteaClient, owner: string, repo: string, labelId: int): GiteaLabel =
   ## Get a specific label
   let resp = client.get(&"/repos/{owner}/{repo}/labels/{labelId}")
@@ -684,7 +699,7 @@ proc removeLabelsFromIssue*(client: GiteaClient, owner: string, repo: string, is
     return
   
   # Get all labels in the repository to find IDs
-  let allLabels = client.listLabels(owner, repo)
+  let allLabels = client.getAllLabels(owner, repo)
   
   # Remove each label by ID
   for labelName in labelNames:
