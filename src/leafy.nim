@@ -193,6 +193,7 @@ type
     labels*: Option[seq[int]]
     closed*: Option[bool]
     due_date*: Option[string]
+    `ref`*: Option[string]
 
   EditIssuePayload* = ref object
     title*: Option[string]
@@ -203,6 +204,7 @@ type
     state*: Option[string]
     unset_due_date*: Option[bool]
     due_date*: Option[string]
+    `ref`*: Option[string]
 
   CreatePullRequestPayload* = ref object
     title*: string
@@ -214,6 +216,20 @@ type
     milestone*: Option[int]
     labels*: Option[seq[int]]
     due_date*: Option[string]
+    reviewers*: Option[seq[string]]
+    team_reviewers*: Option[seq[string]]
+
+  EditPullRequestPayload* = ref object
+    title*: Option[string]
+    body*: Option[string]
+    base*: Option[string]
+    assignee*: Option[string]
+    assignees*: Option[seq[string]]
+    milestone*: Option[int]
+    labels*: Option[seq[int]]
+    state*: Option[string]
+    due_date*: Option[string]
+    allow_maintainer_edit*: Option[bool]
 
   CreateCommentPayload* = ref object
     body*: string
@@ -222,11 +238,15 @@ type
     name*: string
     color*: string
     description*: Option[string]
+    exclusive*: Option[bool]
+    is_archived*: Option[bool]
 
   EditLabelPayload* = ref object
     name*: Option[string]
     color*: Option[string]
     description*: Option[string]
+    exclusive*: Option[bool]
+    is_archived*: Option[bool]
 
   CreateMilestonePayload* = ref object
     title*: string
@@ -467,7 +487,10 @@ proc forkRepository*(client: GiteaClient, owner: string, repo: string, organizat
 
 proc listIssues*(client: GiteaClient, owner: string, repo: string, 
                  state: string = "open", page: int = 1, limit: int = 10, 
-                 labels: string = "", milestone: string = "", assignee: string = ""): seq[GiteaIssue] =
+                 labels: string = "", milestone: string = "", assignee: string = "",
+                 q: string = "", `type`: string = "", milestones: string = "",
+                 since: string = "", before: string = "",
+                 created_by: string = "", assigned_by: string = "", mentioned_by: string = ""): seq[GiteaIssue] =
   ## List issues from a repository
   var path = &"/repos/{owner}/{repo}/issues?state={state}&page={page}&limit={limit}"
   if labels != "":
@@ -476,6 +499,22 @@ proc listIssues*(client: GiteaClient, owner: string, repo: string,
     path &= &"&milestone={milestone}"
   if assignee != "":
     path &= &"&assignee={assignee}"
+  if q != "":
+    path &= &"&q={q}"
+  if `type` != "":
+    path &= &"&type={`type`}"
+  if milestones != "":
+    path &= &"&milestones={milestones}"
+  if since != "":
+    path &= &"&since={since}"
+  if before != "":
+    path &= &"&before={before}"
+  if created_by != "":
+    path &= &"&created_by={created_by}"
+  if assigned_by != "":
+    path &= &"&assigned_by={assigned_by}"
+  if mentioned_by != "":
+    path &= &"&mentioned_by={mentioned_by}"
   let resp = client.get(path)
   return fromJson(resp.body, seq[GiteaIssue])
 
@@ -493,10 +532,7 @@ proc createIssue*(client: GiteaClient, owner: string, repo: string, payload: Cre
 proc editIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, payload: EditIssuePayload): GiteaIssue =
   ## Edit an existing issue
   let jsonBody = toJson(payload)
-  echo &"Editing issue {issueNumber} with payload: {jsonBody}"
-  echo &"URL:" & client.baseUrl & ApiPathPrefix & &"/repos/{owner}/{repo}/issues/{issueNumber}"
   let resp = client.patch(&"/repos/{owner}/{repo}/issues/{issueNumber}", jsonBody)
-  echo &"Response: {resp.body}"
   return fromJson(resp.body, GiteaIssue)
 
 proc closeIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int): GiteaIssue =
@@ -509,12 +545,31 @@ proc reopenIssue*(client: GiteaClient, owner: string, repo: string, issueNumber:
   let payload = EditIssuePayload(state: option("open"))
   return client.editIssue(owner, repo, issueNumber, payload)
 
+proc deleteIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int) =
+  ## Delete an issue
+  discard client.delete(&"/repos/{owner}/{repo}/issues/{issueNumber}")
+
 # ===== PULL REQUEST API =====
 
 proc listPullRequests*(client: GiteaClient, owner: string, repo: string, 
-                      state: string = "open", page: int = 1, limit: int = 10): seq[GiteaPullRequest] =
+                      state: string = "open", page: int = 1, limit: int = 10,
+                      base_branch: string = "", sort: string = "",
+                      milestone: Option[int] = none(int),
+                      labels: seq[int] = @[], poster: string = ""): seq[GiteaPullRequest] =
   ## List pull requests from a repository
-  let resp = client.get(&"/repos/{owner}/{repo}/pulls?state={state}&page={page}&limit={limit}")
+  var path = &"/repos/{owner}/{repo}/pulls?state={state}&page={page}&limit={limit}"
+  if base_branch != "":
+    path &= &"&base_branch={base_branch}"
+  if sort != "":
+    path &= &"&sort={sort}"
+  if milestone.isSome:
+    path &= &"&milestone={milestone.get()}"
+  if labels.len > 0:
+    for labelId in labels:
+      path &= &"&labels={labelId}"
+  if poster != "":
+    path &= &"&poster={poster}"
+  let resp = client.get(path)
   return fromJson(resp.body, seq[GiteaPullRequest])
 
 proc getPullRequest*(client: GiteaClient, owner: string, repo: string, prNumber: int): GiteaPullRequest =
@@ -528,22 +583,45 @@ proc createPullRequest*(client: GiteaClient, owner: string, repo: string, payloa
   let resp = client.post(&"/repos/{owner}/{repo}/pulls", jsonBody)
   return fromJson(resp.body, GiteaPullRequest)
 
+proc editPullRequest*(client: GiteaClient, owner: string, repo: string, prNumber: int, payload: EditPullRequestPayload): GiteaPullRequest =
+  ## Edit an existing pull request
+  let jsonBody = toJson(payload)
+  let resp = client.patch(&"/repos/{owner}/{repo}/pulls/{prNumber}", jsonBody)
+  return fromJson(resp.body, GiteaPullRequest)
+
 proc mergePullRequest*(client: GiteaClient, owner: string, repo: string, prNumber: int, 
-                      mergeMethod: string = "merge", title: string = "", message: string = "") =
+                      mergeMethod: string = "merge", title: string = "", message: string = "",
+                      deleteBranchAfterMerge: Option[bool] = none(bool),
+                      forceMerge: Option[bool] = none(bool),
+                      headCommitId: Option[string] = none(string),
+                      mergeWhenChecksSucceed: Option[bool] = none(bool)) =
   ## Merge a pull request
-  let payload = %*{
+  var payload = %*{
     "Do": mergeMethod,
     "MergeTitleField": title,
     "MergeMessageField": message
   }
+  if deleteBranchAfterMerge.isSome:
+    payload["delete_branch_after_merge"] = %deleteBranchAfterMerge.get()
+  if forceMerge.isSome:
+    payload["force_merge"] = %forceMerge.get()
+  if headCommitId.isSome:
+    payload["head_commit_id"] = %headCommitId.get()
+  if mergeWhenChecksSucceed.isSome:
+    payload["merge_when_checks_succeed"] = %mergeWhenChecksSucceed.get()
   discard client.post(&"/repos/{owner}/{repo}/pulls/{prNumber}/merge", $payload)
 
 # ===== COMMENT API =====
 
 proc listIssueComments*(client: GiteaClient, owner: string, repo: string, issueNumber: int, 
-                       page: int = 1, limit: int = 10): seq[GiteaComment] =
+                       page: int = 1, limit: int = 10, since: string = "", before: string = ""): seq[GiteaComment] =
   ## List comments for an issue
-  let resp = client.get(&"/repos/{owner}/{repo}/issues/{issueNumber}/comments?page={page}&limit={limit}")
+  var path = &"/repos/{owner}/{repo}/issues/{issueNumber}/comments?page={page}&limit={limit}"
+  if since != "":
+    path &= &"&since={since}"
+  if before != "":
+    path &= &"&before={before}"
+  let resp = client.get(path)
   return fromJson(resp.body, seq[GiteaComment])
 
 proc createIssueComment*(client: GiteaClient, owner: string, repo: string, issueNumber: int, payload: CreateCommentPayload): GiteaComment =
@@ -564,9 +642,9 @@ proc deleteIssueComment*(client: GiteaClient, owner: string, repo: string, comme
 
 # ===== LABEL API =====
 
-proc listLabels*(client: GiteaClient, owner: string, repo: string): seq[GiteaLabel] =
+proc listLabels*(client: GiteaClient, owner: string, repo: string, page: int = 1, limit: int = 10): seq[GiteaLabel] =
   ## List all labels for a repository
-  let resp = client.get(&"/repos/{owner}/{repo}/labels")
+  let resp = client.get(&"/repos/{owner}/{repo}/labels?page={page}&limit={limit}")
   return fromJson(resp.body, seq[GiteaLabel])
 
 proc getLabel*(client: GiteaClient, owner: string, repo: string, labelId: int): GiteaLabel =
@@ -618,9 +696,12 @@ proc removeLabelsFromIssue*(client: GiteaClient, owner: string, repo: string, is
 # ===== MILESTONE API =====
 
 proc listMilestones*(client: GiteaClient, owner: string, repo: string, 
-                     state: string = "open", page: int = 1, limit: int = 10): seq[GiteaMilestone] =
+                     state: string = "open", page: int = 1, limit: int = 10, name: string = ""): seq[GiteaMilestone] =
   ## List milestones for a repository
-  let resp = client.get(&"/repos/{owner}/{repo}/milestones?state={state}&page={page}&limit={limit}")
+  var path = &"/repos/{owner}/{repo}/milestones?state={state}&page={page}&limit={limit}"
+  if name != "":
+    path &= &"&name={name}"
+  let resp = client.get(path)
   return fromJson(resp.body, seq[GiteaMilestone])
 
 proc getMilestone*(client: GiteaClient, owner: string, repo: string, milestoneId: int): GiteaMilestone =
@@ -641,9 +722,15 @@ proc deleteMilestone*(client: GiteaClient, owner: string, repo: string, mileston
 # ===== RELEASE API =====
 
 proc listReleases*(client: GiteaClient, owner: string, repo: string, 
-                  page: int = 1, limit: int = 10): seq[GiteaRelease] =
+                  page: int = 1, limit: int = 10, draft: Option[bool] = none(bool),
+                  pre_release: Option[bool] = none(bool)): seq[GiteaRelease] =
   ## List releases for a repository
-  let resp = client.get(&"/repos/{owner}/{repo}/releases?page={page}&limit={limit}")
+  var path = &"/repos/{owner}/{repo}/releases?page={page}&limit={limit}"
+  if draft.isSome:
+    path &= &"&draft={draft.get()}"
+  if pre_release.isSome:
+    path &= &"&pre-release={pre_release.get()}"
+  let resp = client.get(path)
   return fromJson(resp.body, seq[GiteaRelease])
 
 proc getRelease*(client: GiteaClient, owner: string, repo: string, releaseId: int): GiteaRelease =
