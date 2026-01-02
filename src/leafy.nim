@@ -680,7 +680,7 @@ proc editLabel*(client: GiteaClient, owner: string, repo: string, labelId: int, 
   return fromJson(resp.body, GiteaLabel)
 
 proc deleteLabel*(client: GiteaClient, owner: string, repo: string, labelId: int) =
-  ## Delete a label
+  ## Delete a label. Raises GiteaError if deletion fails.
   discard client.delete(&"/repos/{owner}/{repo}/labels/{labelId}")
 
 proc addLabelsToIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int, labels: seq[string]) =
