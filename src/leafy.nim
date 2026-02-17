@@ -11,6 +11,7 @@ import
 
 const
   ApiPathPrefix* = "/api/v1"
+  PageSize* = 50  # Gitea API maximum page size; used for internal pagination in list procs
 
 type
   GiteaError* = object of CatchableError ## Raised if an API operation fails.
@@ -422,11 +423,20 @@ proc getUser*(client: GiteaClient, username: string): GiteaUser =
   let resp = client.get(&"/users/{username}")
   return fromJson(resp.body, GiteaUser)
 
-proc searchUsers*(client: GiteaClient, query: string, page: int = 1, limit: int = 10): seq[GiteaUser] =
-  ## Search for users
-  let resp = client.get(&"/users/search?q={query}&page={page}&limit={limit}")
-  let data = fromJson(resp.body, JsonNode)
-  return fromJson($data["data"], seq[GiteaUser])
+proc searchUsers*(client: GiteaClient, query: string): seq[GiteaUser] =
+  ## Search for users. Paginates internally and returns all matching results.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/users/search?q={query}&page={page}&limit={PageSize}")
+    let data = fromJson(resp.body, JsonNode)
+    let pageResults = fromJson($data["data"], seq[GiteaUser])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 # ===== REPOSITORY API =====
 
@@ -444,20 +454,47 @@ proc getRepository*(client: GiteaClient, owner: string, repo: string): GiteaRepo
   let resp = client.get(&"/repos/{owner}/{repo}")
   return fromJson(resp.body, GiteaRepository)
 
-proc listUserRepositories*(client: GiteaClient, username: string, page: int = 1, limit: int = 10): seq[GiteaRepository] =
-  ## List repositories for a user
-  let resp = client.get(&"/users/{username}/repos?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaRepository])
+proc listUserRepositories*(client: GiteaClient, username: string): seq[GiteaRepository] =
+  ## List all repositories for a user. Paginates internally.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/users/{username}/repos?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaRepository])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
-proc listCurrentUserRepositories*(client: GiteaClient, page: int = 1, limit: int = 10): seq[GiteaRepository] =
-  ## List repositories for the authenticated user
-  let resp = client.get(&"/user/repos?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaRepository])
+proc listCurrentUserRepositories*(client: GiteaClient): seq[GiteaRepository] =
+  ## List all repositories for the authenticated user. Paginates internally.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/user/repos?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaRepository])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
-proc listOrganizationRepositories*(client: GiteaClient, org: string, page: int = 1, limit: int = 10): seq[GiteaRepository] =
-  ## List repositories for an organization
-  let resp = client.get(&"/orgs/{org}/repos?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaRepository])
+proc listOrganizationRepositories*(client: GiteaClient, org: string): seq[GiteaRepository] =
+  ## List all repositories for an organization. Paginates internally.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/orgs/{org}/repos?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaRepository])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc createRepository*(client: GiteaClient, payload: CreateRepositoryPayload): GiteaRepository =
   ## Create a new repository for the authenticated user
@@ -485,38 +522,48 @@ proc forkRepository*(client: GiteaClient, owner: string, repo: string, organizat
 
 # ===== ISSUE API =====
 
-proc listIssues*(client: GiteaClient, owner: string, repo: string, 
-                 state: string = "open", page: int = 1, limit: int = 10, 
+proc listIssues*(client: GiteaClient, owner: string, repo: string,
+                 state: string = "open",
                  labels: string = "", milestone: string = "", assignee: string = "",
                  q: string = "", `type`: string = "", milestones: string = "",
                  since: string = "", before: string = "",
                  created_by: string = "", assigned_by: string = "", mentioned_by: string = ""): seq[GiteaIssue] =
-  ## List issues from a repository
-  var path = &"/repos/{owner}/{repo}/issues?state={state}&page={page}&limit={limit}"
+  ## List all issues from a repository matching the filters. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/issues?state={state}"
   if labels != "":
-    path &= &"&labels={labels}"
+    pathBase &= &"&labels={labels}"
   if milestone != "":
-    path &= &"&milestone={milestone}"
+    pathBase &= &"&milestone={milestone}"
   if assignee != "":
-    path &= &"&assignee={assignee}"
+    pathBase &= &"&assignee={assignee}"
   if q != "":
-    path &= &"&q={q}"
+    pathBase &= &"&q={q}"
   if `type` != "":
-    path &= &"&type={`type`}"
+    pathBase &= &"&type={`type`}"
   if milestones != "":
-    path &= &"&milestones={milestones}"
+    pathBase &= &"&milestones={milestones}"
   if since != "":
-    path &= &"&since={since}"
+    pathBase &= &"&since={since}"
   if before != "":
-    path &= &"&before={before}"
+    pathBase &= &"&before={before}"
   if created_by != "":
-    path &= &"&created_by={created_by}"
+    pathBase &= &"&created_by={created_by}"
   if assigned_by != "":
-    path &= &"&assigned_by={assigned_by}"
+    pathBase &= &"&assigned_by={assigned_by}"
   if mentioned_by != "":
-    path &= &"&mentioned_by={mentioned_by}"
-  let resp = client.get(path)
-  return fromJson(resp.body, seq[GiteaIssue])
+    pathBase &= &"&mentioned_by={mentioned_by}"
+  var page = 1
+  while true:
+    let path = pathBase & &"&page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let pageResults = fromJson(resp.body, seq[GiteaIssue])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc getIssue*(client: GiteaClient, owner: string, repo: string, issueNumber: int): GiteaIssue =
   ## Get a specific issue
@@ -551,26 +598,36 @@ proc deleteIssue*(client: GiteaClient, owner: string, repo: string, issueNumber:
 
 # ===== PULL REQUEST API =====
 
-proc listPullRequests*(client: GiteaClient, owner: string, repo: string, 
-                      state: string = "open", page: int = 1, limit: int = 10,
+proc listPullRequests*(client: GiteaClient, owner: string, repo: string,
+                      state: string = "open",
                       base_branch: string = "", sort: string = "",
                       milestone: Option[int] = none(int),
                       labels: seq[int] = @[], poster: string = ""): seq[GiteaPullRequest] =
-  ## List pull requests from a repository
-  var path = &"/repos/{owner}/{repo}/pulls?state={state}&page={page}&limit={limit}"
+  ## List all pull requests from a repository matching the filters. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/pulls?state={state}"
   if base_branch != "":
-    path &= &"&base_branch={base_branch}"
+    pathBase &= &"&base_branch={base_branch}"
   if sort != "":
-    path &= &"&sort={sort}"
+    pathBase &= &"&sort={sort}"
   if milestone.isSome:
-    path &= &"&milestone={milestone.get()}"
+    pathBase &= &"&milestone={milestone.get()}"
   if labels.len > 0:
     for labelId in labels:
-      path &= &"&labels={labelId}"
+      pathBase &= &"&labels={labelId}"
   if poster != "":
-    path &= &"&poster={poster}"
-  let resp = client.get(path)
-  return fromJson(resp.body, seq[GiteaPullRequest])
+    pathBase &= &"&poster={poster}"
+  var page = 1
+  while true:
+    let path = pathBase & &"&page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let pageResults = fromJson(resp.body, seq[GiteaPullRequest])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc getPullRequest*(client: GiteaClient, owner: string, repo: string, prNumber: int): GiteaPullRequest =
   ## Get a specific pull request
@@ -613,16 +670,31 @@ proc mergePullRequest*(client: GiteaClient, owner: string, repo: string, prNumbe
 
 # ===== COMMENT API =====
 
-proc listIssueComments*(client: GiteaClient, owner: string, repo: string, issueNumber: int, 
-                       page: int = 1, limit: int = 10, since: string = "", before: string = ""): seq[GiteaComment] =
-  ## List comments for an issue
-  var path = &"/repos/{owner}/{repo}/issues/{issueNumber}/comments?page={page}&limit={limit}"
-  if since != "":
-    path &= &"&since={since}"
-  if before != "":
-    path &= &"&before={before}"
-  let resp = client.get(path)
-  return fromJson(resp.body, seq[GiteaComment])
+proc listIssueComments*(client: GiteaClient, owner: string, repo: string, issueNumber: int,
+                       since: string = "", before: string = ""): seq[GiteaComment] =
+  ## List all comments for an issue. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/issues/{issueNumber}/comments"
+  if since != "" or before != "":
+    pathBase &= "?"
+    if since != "":
+      pathBase &= &"since={since}"
+    if before != "":
+      if since != "":
+        pathBase &= "&"
+      pathBase &= &"before={before}"
+  var page = 1
+  while true:
+    let sep = if pathBase.contains('?'): "&" else: "?"
+    let path = pathBase & &"{sep}page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let pageResults = fromJson(resp.body, seq[GiteaComment])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc createIssueComment*(client: GiteaClient, owner: string, repo: string, issueNumber: int, payload: CreateCommentPayload): GiteaComment =
   ## Create a comment on an issue
@@ -642,23 +714,17 @@ proc deleteIssueComment*(client: GiteaClient, owner: string, repo: string, comme
 
 # ===== LABEL API =====
 
-proc listLabels*(client: GiteaClient, owner: string, repo: string, page: int = 1, limit: int = 10): seq[GiteaLabel] =
-  ## List all labels for a repository
-  let resp = client.get(&"/repos/{owner}/{repo}/labels?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaLabel])
-
-proc getAllLabels*(client: GiteaClient, owner: string, repo: string): seq[GiteaLabel] =
-  ## Get all labels for a repository, handling pagination.
+proc listLabels*(client: GiteaClient, owner: string, repo: string): seq[GiteaLabel] =
+  ## List all labels for a repository. Paginates internally.
   result = @[]
   var page = 1
-  const pageLimit = 50  # Gitea API maximum page size is 50
-  
   while true:
-    let pageLabels = client.listLabels(owner, repo, page=page, limit=pageLimit)
-    if pageLabels.len == 0:
+    let resp = client.get(&"/repos/{owner}/{repo}/labels?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaLabel])
+    if pageResults.len == 0:
       break
-    result.add(pageLabels)
-    if pageLabels.len < pageLimit:
+    result.add(pageResults)
+    if pageResults.len < PageSize:
       break
     inc page
 
@@ -699,7 +765,7 @@ proc removeLabelsFromIssue*(client: GiteaClient, owner: string, repo: string, is
     return
   
   # Get all labels in the repository to find IDs
-  let allLabels = client.getAllLabels(owner, repo)
+  let allLabels = client.listLabels(owner, repo)
   
   # Remove each label by ID
   for labelName in labelNames:
@@ -710,14 +776,24 @@ proc removeLabelsFromIssue*(client: GiteaClient, owner: string, repo: string, is
 
 # ===== MILESTONE API =====
 
-proc listMilestones*(client: GiteaClient, owner: string, repo: string, 
-                     state: string = "open", page: int = 1, limit: int = 10, name: string = ""): seq[GiteaMilestone] =
-  ## List milestones for a repository
-  var path = &"/repos/{owner}/{repo}/milestones?state={state}&page={page}&limit={limit}"
+proc listMilestones*(client: GiteaClient, owner: string, repo: string,
+                     state: string = "open", name: string = ""): seq[GiteaMilestone] =
+  ## List all milestones for a repository. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/milestones?state={state}"
   if name != "":
-    path &= &"&name={name}"
-  let resp = client.get(path)
-  return fromJson(resp.body, seq[GiteaMilestone])
+    pathBase &= &"&name={name}"
+  var page = 1
+  while true:
+    let path = pathBase & &"&page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let pageResults = fromJson(resp.body, seq[GiteaMilestone])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc getMilestone*(client: GiteaClient, owner: string, repo: string, milestoneId: int): GiteaMilestone =
   ## Get a specific milestone
@@ -736,17 +812,32 @@ proc deleteMilestone*(client: GiteaClient, owner: string, repo: string, mileston
 
 # ===== RELEASE API =====
 
-proc listReleases*(client: GiteaClient, owner: string, repo: string, 
-                  page: int = 1, limit: int = 10, draft: Option[bool] = none(bool),
+proc listReleases*(client: GiteaClient, owner: string, repo: string,
+                  draft: Option[bool] = none(bool),
                   pre_release: Option[bool] = none(bool)): seq[GiteaRelease] =
-  ## List releases for a repository
-  var path = &"/repos/{owner}/{repo}/releases?page={page}&limit={limit}"
-  if draft.isSome:
-    path &= &"&draft={draft.get()}"
-  if pre_release.isSome:
-    path &= &"&pre-release={pre_release.get()}"
-  let resp = client.get(path)
-  return fromJson(resp.body, seq[GiteaRelease])
+  ## List all releases for a repository. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/releases"
+  if draft.isSome or pre_release.isSome:
+    pathBase &= "?"
+    if draft.isSome:
+      pathBase &= &"draft={draft.get()}"
+    if pre_release.isSome:
+      if draft.isSome:
+        pathBase &= "&"
+      pathBase &= &"pre-release={pre_release.get()}"
+  var page = 1
+  while true:
+    let sep = if pathBase.contains('?'): "&" else: "?"
+    let path = pathBase & &"{sep}page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let pageResults = fromJson(resp.body, seq[GiteaRelease])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc getRelease*(client: GiteaClient, owner: string, repo: string, releaseId: int): GiteaRelease =
   ## Get a specific release
@@ -765,20 +856,38 @@ proc getLatestRelease*(client: GiteaClient, owner: string, repo: string): GiteaR
 
 # ===== ORGANIZATION API =====
 
-proc listOrganizations*(client: GiteaClient, page: int = 1, limit: int = 10): seq[GiteaOrganization] =
-  ## List organizations for the authenticated user
-  let resp = client.get(&"/user/orgs?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaOrganization])
+proc listOrganizations*(client: GiteaClient): seq[GiteaOrganization] =
+  ## List all organizations for the authenticated user. Paginates internally.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/user/orgs?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaOrganization])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc getOrganization*(client: GiteaClient, org: string): GiteaOrganization =
   ## Get an organization
   let resp = client.get(&"/orgs/{org}")
   return fromJson(resp.body, GiteaOrganization)
 
-proc listOrganizationMembers*(client: GiteaClient, org: string, page: int = 1, limit: int = 10): seq[GiteaUser] =
-  ## List members of an organization
-  let resp = client.get(&"/orgs/{org}/members?page={page}&limit={limit}")
-  return fromJson(resp.body, seq[GiteaUser])
+proc listOrganizationMembers*(client: GiteaClient, org: string): seq[GiteaUser] =
+  ## List all members of an organization. Paginates internally.
+  result = @[]
+  var page = 1
+  while true:
+    let resp = client.get(&"/orgs/{org}/members?page={page}&limit={PageSize}")
+    let pageResults = fromJson(resp.body, seq[GiteaUser])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 # ===== UTILITY FUNCTIONS =====
 
