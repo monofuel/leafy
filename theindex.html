@@ -16,10 +16,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="nimdoc.out.css?v=2.2.4">
+<link rel="stylesheet" type="text/css" href="nimdoc.out.css?v=2.2.6">
 
 <!-- JS -->
-<script type="text/javascript" src="dochack.js?v=2.2.4"></script>
+<script type="text/javascript" src="dochack.js?v=2.2.6"></script>
 </head>
 <body>
   <div class="document" id="documentId">
@@ -126,6 +126,10 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc delete(client: GiteaClient; path: string): Response" href="leafy.html#delete%2CGiteaClient%2Cstring">leafy: proc delete(client: GiteaClient; path: string): Response</a></li>
           </ul></dd>
+<dt><a name="deleteIssue" href="#deleteIssue"><span>deleteIssue:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc deleteIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int)" href="leafy.html#deleteIssue%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc deleteIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int)</a></li>
+          </ul></dd>
 <dt><a name="deleteIssueComment" href="#deleteIssueComment"><span>deleteIssueComment:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc deleteIssueComment(client: GiteaClient; owner: string; repo: string;
@@ -179,6 +183,16 @@
 <dt><a name="EditLabelPayload" href="#EditLabelPayload"><span>EditLabelPayload:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: type EditLabelPayload" href="leafy.html#EditLabelPayload">leafy: type EditLabelPayload</a></li>
+          </ul></dd>
+<dt><a name="editPullRequest" href="#editPullRequest"><span>editPullRequest:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc editPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int;
+                payload: EditPullRequestPayload): GiteaPullRequest" href="leafy.html#editPullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2CEditPullRequestPayload">leafy: proc editPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int;
+                payload: EditPullRequestPayload): GiteaPullRequest</a></li>
+          </ul></dd>
+<dt><a name="EditPullRequestPayload" href="#EditPullRequestPayload"><span>EditPullRequestPayload:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: type EditPullRequestPayload" href="leafy.html#EditPullRequestPayload">leafy: type EditPullRequestPayload</a></li>
           </ul></dd>
 <dt><a name="forkRepository" href="#forkRepository"><span>forkRepository:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -280,27 +294,29 @@
           </ul></dd>
 <dt><a name="listCurrentUserRepositories" href="#listCurrentUserRepositories"><span>listCurrentUserRepositories:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listCurrentUserRepositories(client: GiteaClient; page: int = 1; limit: int = 10): seq[
-    GiteaRepository]" href="leafy.html#listCurrentUserRepositories%2CGiteaClient%2Cint%2Cint">leafy: proc listCurrentUserRepositories(client: GiteaClient; page: int = 1; limit: int = 10): seq[
-    GiteaRepository]</a></li>
+          data-doc-search-tag="leafy: proc listCurrentUserRepositories(client: GiteaClient): seq[GiteaRepository]" href="leafy.html#listCurrentUserRepositories%2CGiteaClient">leafy: proc listCurrentUserRepositories(client: GiteaClient): seq[GiteaRepository]</a></li>
           </ul></dd>
 <dt><a name="listIssueComments" href="#listIssueComments"><span>listIssueComments:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listIssueComments(client: GiteaClient; owner: string; repo: string;
-                  issueNumber: int; page: int = 1; limit: int = 10): seq[
-    GiteaComment]" href="leafy.html#listIssueComments%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cint%2Cint">leafy: proc listIssueComments(client: GiteaClient; owner: string; repo: string;
-                  issueNumber: int; page: int = 1; limit: int = 10): seq[
+                  issueNumber: int; since: string = &quot;&quot;; before: string = &quot;&quot;): seq[
+    GiteaComment]" href="leafy.html#listIssueComments%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring">leafy: proc listIssueComments(client: GiteaClient; owner: string; repo: string;
+                  issueNumber: int; since: string = &quot;&quot;; before: string = &quot;&quot;): seq[
     GiteaComment]</a></li>
           </ul></dd>
 <dt><a name="listIssues" href="#listIssues"><span>listIssues:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listIssues(client: GiteaClient; owner: string; repo: string;
-           state: string = &quot;open&quot;; page: int = 1; limit: int = 10;
-           labels: string = &quot;&quot;; milestone: string = &quot;&quot;; assignee: string = &quot;&quot;): seq[
-    GiteaIssue]" href="leafy.html#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cint%2Cint%2Cstring%2Cstring%2Cstring">leafy: proc listIssues(client: GiteaClient; owner: string; repo: string;
-           state: string = &quot;open&quot;; page: int = 1; limit: int = 10;
-           labels: string = &quot;&quot;; milestone: string = &quot;&quot;; assignee: string = &quot;&quot;): seq[
-    GiteaIssue]</a></li>
+           state: string = &quot;open&quot;; labels: string = &quot;&quot;; milestone: string = &quot;&quot;;
+           assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
+           milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
+           created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
+           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]" href="leafy.html#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring">leafy: proc listIssues(client: GiteaClient; owner: string; repo: string;
+           state: string = &quot;open&quot;; labels: string = &quot;&quot;; milestone: string = &quot;&quot;;
+           assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
+           milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
+           created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
+           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]</a></li>
           </ul></dd>
 <dt><a name="listLabels" href="#listLabels"><span>listLabels:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -309,60 +325,70 @@
 <dt><a name="listMilestones" href="#listMilestones"><span>listMilestones:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listMilestones(client: GiteaClient; owner: string; repo: string;
-               state: string = &quot;open&quot;; page: int = 1; limit: int = 10): seq[
-    GiteaMilestone]" href="leafy.html#listMilestones%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cint%2Cint">leafy: proc listMilestones(client: GiteaClient; owner: string; repo: string;
-               state: string = &quot;open&quot;; page: int = 1; limit: int = 10): seq[
-    GiteaMilestone]</a></li>
+               state: string = &quot;open&quot;; name: string = &quot;&quot;): seq[GiteaMilestone]" href="leafy.html#listMilestones%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring">leafy: proc listMilestones(client: GiteaClient; owner: string; repo: string;
+               state: string = &quot;open&quot;; name: string = &quot;&quot;): seq[GiteaMilestone]</a></li>
           </ul></dd>
 <dt><a name="listOrganizationMembers" href="#listOrganizationMembers"><span>listOrganizationMembers:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listOrganizationMembers(client: GiteaClient; org: string; page: int = 1;
-                        limit: int = 10): seq[GiteaUser]" href="leafy.html#listOrganizationMembers%2CGiteaClient%2Cstring%2Cint%2Cint">leafy: proc listOrganizationMembers(client: GiteaClient; org: string; page: int = 1;
-                        limit: int = 10): seq[GiteaUser]</a></li>
+          data-doc-search-tag="leafy: proc listOrganizationMembers(client: GiteaClient; org: string): seq[GiteaUser]" href="leafy.html#listOrganizationMembers%2CGiteaClient%2Cstring">leafy: proc listOrganizationMembers(client: GiteaClient; org: string): seq[GiteaUser]</a></li>
           </ul></dd>
 <dt><a name="listOrganizationRepositories" href="#listOrganizationRepositories"><span>listOrganizationRepositories:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listOrganizationRepositories(client: GiteaClient; org: string; page: int = 1;
-                             limit: int = 10): seq[GiteaRepository]" href="leafy.html#listOrganizationRepositories%2CGiteaClient%2Cstring%2Cint%2Cint">leafy: proc listOrganizationRepositories(client: GiteaClient; org: string; page: int = 1;
-                             limit: int = 10): seq[GiteaRepository]</a></li>
+          data-doc-search-tag="leafy: proc listOrganizationRepositories(client: GiteaClient; org: string): seq[
+    GiteaRepository]" href="leafy.html#listOrganizationRepositories%2CGiteaClient%2Cstring">leafy: proc listOrganizationRepositories(client: GiteaClient; org: string): seq[
+    GiteaRepository]</a></li>
           </ul></dd>
 <dt><a name="listOrganizations" href="#listOrganizations"><span>listOrganizations:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listOrganizations(client: GiteaClient; page: int = 1; limit: int = 10): seq[
-    GiteaOrganization]" href="leafy.html#listOrganizations%2CGiteaClient%2Cint%2Cint">leafy: proc listOrganizations(client: GiteaClient; page: int = 1; limit: int = 10): seq[
-    GiteaOrganization]</a></li>
+          data-doc-search-tag="leafy: proc listOrganizations(client: GiteaClient): seq[GiteaOrganization]" href="leafy.html#listOrganizations%2CGiteaClient">leafy: proc listOrganizations(client: GiteaClient): seq[GiteaOrganization]</a></li>
           </ul></dd>
 <dt><a name="listPullRequests" href="#listPullRequests"><span>listPullRequests:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
-                 state: string = &quot;open&quot;; page: int = 1; limit: int = 10): seq[
-    GiteaPullRequest]" href="leafy.html#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cint%2Cint">leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
-                 state: string = &quot;open&quot;; page: int = 1; limit: int = 10): seq[
+                 state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
+                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
+                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
+    GiteaPullRequest]" href="leafy.html#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring">leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
+                 state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
+                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
+                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
     GiteaPullRequest]</a></li>
           </ul></dd>
 <dt><a name="listReleases" href="#listReleases"><span>listReleases:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listReleases(client: GiteaClient; owner: string; repo: string; page: int = 1;
-             limit: int = 10): seq[GiteaRelease]" href="leafy.html#listReleases%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cint">leafy: proc listReleases(client: GiteaClient; owner: string; repo: string; page: int = 1;
-             limit: int = 10): seq[GiteaRelease]</a></li>
+          data-doc-search-tag="leafy: proc listReleases(client: GiteaClient; owner: string; repo: string;
+             draft: Option[bool] = none(bool);
+             pre_release: Option[bool] = none(bool)): seq[GiteaRelease]" href="leafy.html#listReleases%2CGiteaClient%2Cstring%2Cstring%2COption%5Bbool%5D%2COption%5Bbool%5D">leafy: proc listReleases(client: GiteaClient; owner: string; repo: string;
+             draft: Option[bool] = none(bool);
+             pre_release: Option[bool] = none(bool)): seq[GiteaRelease]</a></li>
           </ul></dd>
 <dt><a name="listUserRepositories" href="#listUserRepositories"><span>listUserRepositories:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc listUserRepositories(client: GiteaClient; username: string; page: int = 1;
-                     limit: int = 10): seq[GiteaRepository]" href="leafy.html#listUserRepositories%2CGiteaClient%2Cstring%2Cint%2Cint">leafy: proc listUserRepositories(client: GiteaClient; username: string; page: int = 1;
-                     limit: int = 10): seq[GiteaRepository]</a></li>
+          data-doc-search-tag="leafy: proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]" href="leafy.html#listUserRepositories%2CGiteaClient%2Cstring">leafy: proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]</a></li>
           </ul></dd>
 <dt><a name="mergePullRequest" href="#mergePullRequest"><span>mergePullRequest:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;)" href="leafy.html#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring">leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
+                 title: string = &quot;&quot;; message: string = &quot;&quot;;
+                 deleteBranchAfterMerge: Option[bool] = none(bool);
+                 forceMerge: Option[bool] = none(bool);
+                 headCommitId: Option[string] = none(string);
+                 mergeWhenChecksSucceed: Option[bool] = none(bool))" href="leafy.html#mergePullRequest%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cstring%2Cstring%2Cstring%2COption%5Bbool%5D%2COption%5Bbool%5D%2COption%5Bstring%5D%2COption%5Bbool%5D">leafy: proc mergePullRequest(client: GiteaClient; owner: string; repo: string;
                  prNumber: int; mergeMethod: string = &quot;merge&quot;;
-                 title: string = &quot;&quot;; message: string = &quot;&quot;)</a></li>
+                 title: string = &quot;&quot;; message: string = &quot;&quot;;
+                 deleteBranchAfterMerge: Option[bool] = none(bool);
+                 forceMerge: Option[bool] = none(bool);
+                 headCommitId: Option[string] = none(string);
+                 mergeWhenChecksSucceed: Option[bool] = none(bool))</a></li>
           </ul></dd>
 <dt><a name="newGiteaClient" href="#newGiteaClient"><span>newGiteaClient:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc newGiteaClient(baseUrl: string; token: string = &quot;&quot;): GiteaClient" href="leafy.html#newGiteaClient%2Cstring%2Cstring">leafy: proc newGiteaClient(baseUrl: string; token: string = &quot;&quot;): GiteaClient</a></li>
+          </ul></dd>
+<dt><a name="PageSize" href="#PageSize"><span>PageSize:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: const PageSize" href="leafy.html#PageSize">leafy: const PageSize</a></li>
           </ul></dd>
 <dt><a name="patch" href="#patch"><span>patch:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -380,21 +406,31 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc put(client: GiteaClient; path: string; body: string): Response" href="leafy.html#put%2CGiteaClient%2Cstring%2Cstring">leafy: proc put(client: GiteaClient; path: string; body: string): Response</a></li>
           </ul></dd>
+<dt><a name="removeLabelFromIssue" href="#removeLabelFromIssue"><span>removeLabelFromIssue:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc removeLabelFromIssue(client: GiteaClient; owner: string; repo: string;
+                     issueNumber: int; labelId: int)" href="leafy.html#removeLabelFromIssue%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cint">leafy: proc removeLabelFromIssue(client: GiteaClient; owner: string; repo: string;
+                     issueNumber: int; labelId: int)</a></li>
+          </ul></dd>
+<dt><a name="removeLabelsFromIssue" href="#removeLabelsFromIssue"><span>removeLabelsFromIssue:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc removeLabelsFromIssue(client: GiteaClient; owner: string; repo: string;
+                      issueNumber: int; labelNames: seq[string])" href="leafy.html#removeLabelsFromIssue%2CGiteaClient%2Cstring%2Cstring%2Cint%2Cseq%5Bstring%5D">leafy: proc removeLabelsFromIssue(client: GiteaClient; owner: string; repo: string;
+                      issueNumber: int; labelNames: seq[string])</a></li>
+          </ul></dd>
 <dt><a name="reopenIssue" href="#reopenIssue"><span>reopenIssue:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc reopenIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue" href="leafy.html#reopenIssue%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc reopenIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue</a></li>
           </ul></dd>
 <dt><a name="searchUsers" href="#searchUsers"><span>searchUsers:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="leafy: proc searchUsers(client: GiteaClient; query: string; page: int = 1; limit: int = 10): seq[
-    GiteaUser]" href="leafy.html#searchUsers%2CGiteaClient%2Cstring%2Cint%2Cint">leafy: proc searchUsers(client: GiteaClient; query: string; page: int = 1; limit: int = 10): seq[
-    GiteaUser]</a></li>
+          data-doc-search-tag="leafy: proc searchUsers(client: GiteaClient; query: string): seq[GiteaUser]" href="leafy.html#searchUsers%2CGiteaClient%2Cstring">leafy: proc searchUsers(client: GiteaClient; query: string): seq[GiteaUser]</a></li>
           </ul></dd>
 </dl>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2025-07-02 06:49:14 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-17 23:09:37 UTC</small>
       </div>
     </div>
   </div>
