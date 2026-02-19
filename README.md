@@ -16,7 +16,7 @@ A comprehensive Gitea API client library for Nim.
 - 🎯 **Milestones** - Create and manage milestones
 - 📋 **Organizations** - List organizations and members
 - 🚀 **Releases** - Get and list releases
-- ⚙️ **Actions / Workflows** - Trigger workflows via the workflow_dispatch API
+- ⚙️ **Actions / Workflows** - Trigger workflows, inspect runs/jobs/logs, and list artifacts
 
 ## Installation
 
@@ -117,6 +117,15 @@ let newIssue = client.createIssue("owner", "repo-name", payload)
 ### Actions / Workflows
 
 - `dispatchWorkflow(owner, repo, workflow, gitRef = "main", inputs = Table[string,string])` - Trigger a manual workflow run (equivalent to GitHub's `workflow_dispatch`)
+- `listActionRuns(owner, repo, filters...)` - List workflow runs with filters and pagination
+- `getActionRun(owner, repo, runId)` - Get details for a workflow run
+- `listActionRunJobs(owner, repo, runId)` - List jobs for a specific run
+- `listActionJobs(owner, repo)` - List jobs across the repository
+- `getActionJob(owner, repo, jobId)` - Get details for a specific job
+- `getActionJobLogs(owner, repo, jobId)` - Download raw logs for a specific job
+- `listArtifacts(owner, repo, name = "")` - List repository artifacts (optional name filter)
+- `getArtifact(owner, repo, artifactId)` - Get metadata for an artifact
+- `listRunArtifacts(owner, repo, runId)` - List artifacts attached to a run
 
 ### Organization Operations
 - `listOrganizations()` - List user's organizations

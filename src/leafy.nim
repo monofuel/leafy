@@ -173,6 +173,45 @@ type
     published_at*: string
     author*: GiteaUser
 
+  GiteaActionRun* = ref object
+    id*: int
+    name*: string
+    head_branch*: string
+    head_sha*: string
+    path*: string
+    display_title*: string
+    run_number*: int
+    event*: string
+    status*: string
+    conclusion*: Option[string]
+    workflow_id*: Option[int]
+    created_at*: string
+    updated_at*: string
+    run_started_at*: Option[string]
+    html_url*: Option[string]
+
+  GiteaActionJob* = ref object
+    id*: int
+    run_id*: Option[int]
+    run_url*: Option[string]
+    name*: string
+    status*: string
+    conclusion*: Option[string]
+    started_at*: Option[string]
+    completed_at*: Option[string]
+    runner_name*: Option[string]
+    head_branch*: Option[string]
+
+  GiteaActionArtifact* = ref object
+    id*: int
+    name*: string
+    size_in_bytes*: int
+    archive_download_url*: Option[string]
+    expired*: bool
+    created_at*: string
+    updated_at*: string
+    expires_at*: Option[string]
+
   # Request payloads
   CreateRepositoryPayload* = ref object
     name*: string
@@ -363,6 +402,159 @@ proc dispatchWorkflow*(client: GiteaClient, owner: string, repo: string,
     payload["inputs"] = inputsNode
 
   discard client.post(&"/repos/{owner}/{repo}/actions/workflows/{workflow}/dispatches", $payload)
+
+proc listActionRuns*(client: GiteaClient, owner: string, repo: string,
+                     actor: string = "", branch: string = "", event: string = "",
+                     status: string = "", headSha: string = "",
+                     workflowId: Option[int] = none(int)): seq[GiteaActionRun] =
+  ## List all Actions workflow runs for a repository. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/actions/runs"
+  var query: seq[string] = @[]
+  if actor != "":
+    query.add(&"actor={actor}")
+  if branch != "":
+    query.add(&"branch={branch}")
+  if event != "":
+    query.add(&"event={event}")
+  if status != "":
+    query.add(&"status={status}")
+  if headSha != "":
+    query.add(&"head_sha={headSha}")
+  if workflowId.isSome:
+    query.add(&"workflow_id={workflowId.get()}")
+  if query.len > 0:
+    pathBase &= "?" & query.join("&")
+
+  var page = 1
+  while true:
+    let sep = if pathBase.contains('?'): "&" else: "?"
+    let path = pathBase & &"{sep}page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let node = fromJson(resp.body, JsonNode)
+    var pageResults: seq[GiteaActionRun] = @[]
+    if node.kind == JArray:
+      pageResults = fromJson(resp.body, seq[GiteaActionRun])
+    elif node.hasKey("workflow_runs"):
+      pageResults = fromJson($node["workflow_runs"], seq[GiteaActionRun])
+    elif node.hasKey("runs"):
+      pageResults = fromJson($node["runs"], seq[GiteaActionRun])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
+
+proc getActionRun*(client: GiteaClient, owner: string, repo: string, runId: int): GiteaActionRun =
+  ## Get a single Actions workflow run.
+  let resp = client.get(&"/repos/{owner}/{repo}/actions/runs/{runId}")
+  return fromJson(resp.body, GiteaActionRun)
+
+proc listActionRunJobs*(client: GiteaClient, owner: string, repo: string, runId: int): seq[GiteaActionJob] =
+  ## List all jobs for a workflow run. Paginates internally.
+  result = @[]
+  let pathBase = &"/repos/{owner}/{repo}/actions/runs/{runId}/jobs"
+  var page = 1
+  while true:
+    let path = pathBase & &"?page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let node = fromJson(resp.body, JsonNode)
+    var pageResults: seq[GiteaActionJob] = @[]
+    if node.kind == JArray:
+      pageResults = fromJson(resp.body, seq[GiteaActionJob])
+    elif node.hasKey("jobs"):
+      pageResults = fromJson($node["jobs"], seq[GiteaActionJob])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
+
+proc listActionJobs*(client: GiteaClient, owner: string, repo: string, status: string = ""): seq[GiteaActionJob] =
+  ## List all Actions jobs for a repository. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/actions/jobs"
+  if status != "":
+    pathBase &= &"?status={status}"
+  var page = 1
+  while true:
+    let sep = if pathBase.contains('?'): "&" else: "?"
+    let path = pathBase & &"{sep}page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let node = fromJson(resp.body, JsonNode)
+    var pageResults: seq[GiteaActionJob] = @[]
+    if node.kind == JArray:
+      pageResults = fromJson(resp.body, seq[GiteaActionJob])
+    elif node.hasKey("jobs"):
+      pageResults = fromJson($node["jobs"], seq[GiteaActionJob])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
+
+proc getActionJob*(client: GiteaClient, owner: string, repo: string, jobId: int): GiteaActionJob =
+  ## Get a single Actions job.
+  let resp = client.get(&"/repos/{owner}/{repo}/actions/jobs/{jobId}")
+  return fromJson(resp.body, GiteaActionJob)
+
+proc getActionJobLogs*(client: GiteaClient, owner: string, repo: string, jobId: int): string =
+  ## Get raw logs for an Actions job.
+  let resp = client.get(&"/repos/{owner}/{repo}/actions/jobs/{jobId}/logs")
+  return resp.body
+
+proc listArtifacts*(client: GiteaClient, owner: string, repo: string, name: string = ""): seq[GiteaActionArtifact] =
+  ## List all Actions artifacts for a repository. Paginates internally.
+  result = @[]
+  var pathBase = &"/repos/{owner}/{repo}/actions/artifacts"
+  if name != "":
+    pathBase &= &"?name={name}"
+  var page = 1
+  while true:
+    let sep = if pathBase.contains('?'): "&" else: "?"
+    let path = pathBase & &"{sep}page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let node = fromJson(resp.body, JsonNode)
+    var pageResults: seq[GiteaActionArtifact] = @[]
+    if node.kind == JArray:
+      pageResults = fromJson(resp.body, seq[GiteaActionArtifact])
+    elif node.hasKey("artifacts"):
+      pageResults = fromJson($node["artifacts"], seq[GiteaActionArtifact])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
+
+proc getArtifact*(client: GiteaClient, owner: string, repo: string, artifactId: int): GiteaActionArtifact =
+  ## Get metadata for a single Actions artifact.
+  let resp = client.get(&"/repos/{owner}/{repo}/actions/artifacts/{artifactId}")
+  return fromJson(resp.body, GiteaActionArtifact)
+
+proc listRunArtifacts*(client: GiteaClient, owner: string, repo: string, runId: int): seq[GiteaActionArtifact] =
+  ## List all artifacts attached to a workflow run. Paginates internally.
+  result = @[]
+  let pathBase = &"/repos/{owner}/{repo}/actions/runs/{runId}/artifacts"
+  var page = 1
+  while true:
+    let path = pathBase & &"?page={page}&limit={PageSize}"
+    let resp = client.get(path)
+    let node = fromJson(resp.body, JsonNode)
+    var pageResults: seq[GiteaActionArtifact] = @[]
+    if node.kind == JArray:
+      pageResults = fromJson(resp.body, seq[GiteaActionArtifact])
+    elif node.hasKey("artifacts"):
+      pageResults = fromJson($node["artifacts"], seq[GiteaActionArtifact])
+    if pageResults.len == 0:
+      break
+    result.add(pageResults)
+    if pageResults.len < PageSize:
+      break
+    inc page
 
 proc put*(client: GiteaClient, path: string, body: string): Response =
   ## Make a PUT request to the Gitea API

@@ -104,6 +104,55 @@ suite "Payload Creation":
     let payload = CreateCommentPayload(body: "This is a test comment")
     check payload.body == "This is a test comment"
 
+suite "Actions Model Creation":
+  test "can create action run model":
+    let run = GiteaActionRun(
+      id: 42,
+      name: "CI",
+      head_branch: "main",
+      head_sha: "abc123",
+      path: ".gitea/workflows/build.yml",
+      display_title: "Build",
+      run_number: 7,
+      event: "push",
+      status: "completed",
+      conclusion: option("success"),
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:10:00Z"
+    )
+    check run.id == 42
+    check run.status == "completed"
+    check run.conclusion.isSome
+
+  test "can create action job model":
+    let job = GiteaActionJob(
+      id: 77,
+      run_id: option(42),
+      run_url: option("https://gitea.example.com/api/v1/repos/o/r/actions/runs/42"),
+      name: "test",
+      status: "in_progress",
+      conclusion: none(string),
+      started_at: option("2026-01-01T00:01:00Z"),
+      completed_at: none(string)
+    )
+    check job.id == 77
+    check job.run_id.isSome
+    check job.completed_at.isNone
+
+  test "can create action artifact model":
+    let artifact = GiteaActionArtifact(
+      id: 9,
+      name: "build-output",
+      size_in_bytes: 1024,
+      archive_download_url: option("https://gitea.example.com/download"),
+      expired: false,
+      created_at: "2026-01-01T00:05:00Z",
+      updated_at: "2026-01-01T00:06:00Z"
+    )
+    check artifact.name == "build-output"
+    check artifact.size_in_bytes == 1024
+    check artifact.expired == false
+
 suite "URL Path Construction":
   test "API prefix is correct":
     check ApiPathPrefix == "/api/v1"
