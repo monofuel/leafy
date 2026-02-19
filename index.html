@@ -485,17 +485,19 @@
 
 </ul>
 <ul class="simple nested-toc-section">listIssues
-  <li><a class="reference" href="#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring" title="listIssues(client: GiteaClient; owner: string; repo: string;
+  <li><a class="reference" href="#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring" title="listIssues(client: GiteaClient; owner: string; repo: string;
            state: string = &quot;open&quot;; labels: string = &quot;&quot;; milestone: string = &quot;&quot;;
            assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
            milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
            created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
-           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]">listIssues(client: GiteaClient; owner: string; repo: string;
+           mentioned_by: string = &quot;&quot;; sort: string = &quot;&quot;; direction: string = &quot;&quot;): seq[
+    GiteaIssue]">listIssues(client: GiteaClient; owner: string; repo: string;
            state: string = &quot;open&quot;; labels: string = &quot;&quot;; milestone: string = &quot;&quot;;
            assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
            milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
            created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
-           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]</a></li>
+           mentioned_by: string = &quot;&quot;; sort: string = &quot;&quot;; direction: string = &quot;&quot;): seq[
+    GiteaIssue]</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">listLabels
@@ -523,15 +525,15 @@
 
 </ul>
 <ul class="simple nested-toc-section">listPullRequests
-  <li><a class="reference" href="#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring" title="listPullRequests(client: GiteaClient; owner: string; repo: string;
+  <li><a class="reference" href="#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring" title="listPullRequests(client: GiteaClient; owner: string; repo: string;
                  state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
-                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
-                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
-    GiteaPullRequest]">listPullRequests(client: GiteaClient; owner: string; repo: string;
+                 sort: string = &quot;&quot;; direction: string = &quot;&quot;;
+                 milestone: Option[int] = none(int); labels: seq[int] = @[];
+                 poster: string = &quot;&quot;): seq[GiteaPullRequest]">listPullRequests(client: GiteaClient; owner: string; repo: string;
                  state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
-                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
-                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
-    GiteaPullRequest]</a></li>
+                 sort: string = &quot;&quot;; direction: string = &quot;&quot;;
+                 milestone: Option[int] = none(int); labels: seq[int] = @[];
+                 poster: string = &quot;&quot;): seq[GiteaPullRequest]</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">listReleases
@@ -1076,8 +1078,8 @@
   <dd>
     
     Format an issue for display
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L894" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L894" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L914" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L914" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1086,8 +1088,8 @@
   <dd>
     
     Format a pull request for display
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L918" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L918" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L938" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L938" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1101,8 +1103,8 @@
   <dd>
     
     Add labels to an issue using the dedicated labels API
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L752" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L752" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L772" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L772" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1144,8 +1146,8 @@
   <dd>
     
     Close an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L585" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L585" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L599" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L599" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1160,8 +1162,8 @@
   <dd>
     
     Create a new issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L573" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L573" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L587" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L587" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1176,8 +1178,8 @@
   <dd>
     
     Create a comment on an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L699" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L699" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L719" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L719" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1192,8 +1194,8 @@
   <dd>
     
     Create a new label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L736" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L736" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L756" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L756" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1208,8 +1210,8 @@
   <dd>
     
     Create a new milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L803" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L803" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L823" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L823" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1240,8 +1242,8 @@
   <dd>
     
     Create a new pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L637" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L637" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L657" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L657" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1284,8 +1286,8 @@
   <dd>
     
     Delete an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L595" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L595" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L609" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L609" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1299,8 +1301,8 @@
   <dd>
     
     Delete a comment
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L711" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L711" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L731" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L731" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1313,8 +1315,8 @@
   <dd>
     
     Delete a label. Raises GiteaError if deletion fails.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L748" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L748" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L768" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L768" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1328,8 +1330,8 @@
   <dd>
     
     Delete a milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L809" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L809" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L829" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L829" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1376,8 +1378,8 @@
   <dd>
     
     Edit an existing issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L579" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L579" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L593" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L593" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1392,8 +1394,8 @@
   <dd>
     
     Edit a comment
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L705" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L705" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L725" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L725" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1408,8 +1410,8 @@
   <dd>
     
     Edit a label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L742" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L742" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L762" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L762" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1424,8 +1426,8 @@
   <dd>
     
     Edit an existing pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L643" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L643" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L663" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L663" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1484,8 +1486,8 @@
   <dd>
     
     Get a specific issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L568" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L568" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L582" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L582" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1499,8 +1501,8 @@
   <dd>
     
     Get a specific label
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L731" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L731" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L751" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L751" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1514,8 +1516,8 @@
   <dd>
     
     Get the latest release
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L852" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L852" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L872" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L872" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1530,8 +1532,8 @@
   <dd>
     
     Get a specific milestone
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L798" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L798" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L818" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L818" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1545,8 +1547,8 @@
   <dd>
     
     Get an organization
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L873" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L873" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L893" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L893" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1561,8 +1563,8 @@
   <dd>
     
     Get a specific pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L632" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L632" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L652" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L652" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1576,8 +1578,8 @@
   <dd>
     
     Get a specific release
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L842" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L842" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L862" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L862" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1592,8 +1594,8 @@
   <dd>
     
     Get a release by tag name
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L847" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L847" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L867" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L867" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1653,26 +1655,35 @@
   <dd>
     
     List all comments for an issue. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L673" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L673" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L693" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L693" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
 
 </div>
 <div id="listIssues-procs-all">
-  <div id="listIssues,GiteaClient,string,string,string,string,string,string,string,string,string,string,string,string,string,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring"><span class="Identifier">listIssues</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
+  <div id="listIssues,GiteaClient,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring"><span class="Identifier">listIssues</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
                 <span class="Identifier">state</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;open&quot;</span><span class="Other">;</span> <span class="Identifier">labels</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
                 <span class="Identifier">milestone</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">assignee</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
                 <span class="Identifier">type</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">milestones</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">since</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
                 <span class="Identifier">before</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">created_by</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
-                <span class="Identifier">assigned_by</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">mentioned_by</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span>
-    <a href="leafy.html#GiteaIssue"><span class="Identifier">GiteaIssue</span></a><span class="Other">]</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">,</span> <span class="Identifier">JsonError</span><span class="Other">,</span>
-                           <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+                <span class="Identifier">assigned_by</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">mentioned_by</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
+                <span class="Identifier">sort</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">direction</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="leafy.html#GiteaIssue"><span class="Identifier">GiteaIssue</span></a><span class="Other">]</span> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">,</span> <span class="Identifier">JsonError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    List all issues from a repository matching the filters. Paginates internally.
+    <p>List all issues from a repository matching the filters. Paginates internally.</p>
+<p>Label filtering supports advanced syntax:</p>
+<ul class="simple"><li><tt class="docutils literal"><span class="pre">&quot;bug,feature&quot;</span></tt> — issues with both labels</li>
+<li><tt class="docutils literal"><span class="pre">&quot;-bug&quot;</span></tt> — exclude issues with &quot;bug&quot; label</li>
+<li><tt class="docutils literal"><span class="pre">&quot;bug,-wontfix&quot;</span></tt> — has &quot;bug&quot; but not &quot;wontfix&quot;</li>
+<li><tt class="docutils literal"><span class="pre">&quot;0&quot;</span></tt> — only unlabeled issues</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">sort</span></tt> can be: oldest, recentupdate, leastupdate, mostcomment, leastcomment, priority. <tt class="docutils literal"><span class="pre">direction</span></tt> can be: asc, desc.</p>
+
     <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L525" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
 <a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L525" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
@@ -1688,8 +1699,8 @@
   <dd>
     
     List all labels for a repository. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L717" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L717" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L737" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L737" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1704,8 +1715,8 @@
   <dd>
     
     List all milestones for a repository. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L779" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L779" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L799" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L799" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1719,8 +1730,8 @@
   <dd>
     
     List all members of an organization. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L878" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L878" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L898" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L898" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1750,27 +1761,30 @@
   <dd>
     
     List all organizations for the authenticated user. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L859" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L859" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L879" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L879" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
 
 </div>
 <div id="listPullRequests-procs-all">
-  <div id="listPullRequests,GiteaClient,string,string,string,string,string,Option[int],seq[int],string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring"><span class="Identifier">listPullRequests</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
+  <div id="listPullRequests,GiteaClient,string,string,string,string,string,string,Option[int],seq[int],string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring"><span class="Identifier">listPullRequests</span></a><span class="Other">(</span><span class="Identifier">client</span><span class="Other">:</span> <a href="leafy.html#GiteaClient"><span class="Identifier">GiteaClient</span></a><span class="Other">;</span> <span class="Identifier">owner</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">repo</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span>
                       <span class="Identifier">state</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;open&quot;</span><span class="Other">;</span> <span class="Identifier">base_branch</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
-                      <span class="Identifier">sort</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">milestone</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">none</span><span class="Other">(</span><span class="Identifier">int</span><span class="Other">)</span><span class="Other">;</span>
+                      <span class="Identifier">sort</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span> <span class="Identifier">direction</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
+                      <span class="Identifier">milestone</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">none</span><span class="Other">(</span><span class="Identifier">int</span><span class="Other">)</span><span class="Other">;</span>
                       <span class="Identifier">labels</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other">=</span> <span class="Operator">@</span><span class="Other">[</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">poster</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span>
     <a href="leafy.html#GiteaPullRequest"><span class="Identifier">GiteaPullRequest</span></a><span class="Other">]</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ZippyError</span><span class="Other">,</span> <span class="Identifier">CatchableError</span><span class="Other">,</span> <span class="Identifier">GiteaError</span><span class="Other">,</span>
                                  <span class="Identifier">JsonError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span>
                         <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    List all pull requests from a repository matching the filters. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L601" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L601" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <p>List all pull requests from a repository matching the filters. Paginates internally.</p>
+<p><tt class="docutils literal"><span class="pre">sort</span></tt> can be: oldest, recentupdate, leastupdate, mostcomment, leastcomment, priority. <tt class="docutils literal"><span class="pre">direction</span></tt> can be: asc, desc.</p>
+
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L615" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L615" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1786,8 +1800,8 @@
   <dd>
     
     List all releases for a repository. Paginates internally.
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L815" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L815" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L835" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L835" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1822,8 +1836,8 @@
   <dd>
     
     Merge a pull request
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L649" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L649" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L669" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L669" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1895,8 +1909,8 @@
   <dd>
     
     Remove a specific label from an issue using the label ID
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L758" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L758" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L778" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L778" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1911,8 +1925,8 @@
   <dd>
     
     Remove specific labels from an issue by name
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L762" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L762" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L782" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L782" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1927,8 +1941,8 @@
   <dd>
     
     Reopen an issue
-    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L590" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
-<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L590" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
+    <a href="https://github.com/monofuel/leafy/tree/master/src/leafy.nim#L604" class="link-seesrc" target="_blank">Source</a>&nbsp;&nbsp;
+<a href="https://github.com/monofuel/leafy/edit/devel/src/leafy.nim#L604" class="link-seesrc" target="_blank" >Edit</a>&nbsp;&nbsp;
 
   </dd>
 </div>
@@ -1959,7 +1973,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-17 23:09:37 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-19 22:15:42 UTC</small>
       </div>
     </div>
   </div>

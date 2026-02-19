@@ -311,12 +311,14 @@
            assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
            milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
            created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
-           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]" href="leafy.html#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring">leafy: proc listIssues(client: GiteaClient; owner: string; repo: string;
+           mentioned_by: string = &quot;&quot;; sort: string = &quot;&quot;; direction: string = &quot;&quot;): seq[
+    GiteaIssue]" href="leafy.html#listIssues%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring">leafy: proc listIssues(client: GiteaClient; owner: string; repo: string;
            state: string = &quot;open&quot;; labels: string = &quot;&quot;; milestone: string = &quot;&quot;;
            assignee: string = &quot;&quot;; q: string = &quot;&quot;; type: string = &quot;&quot;;
            milestones: string = &quot;&quot;; since: string = &quot;&quot;; before: string = &quot;&quot;;
            created_by: string = &quot;&quot;; assigned_by: string = &quot;&quot;;
-           mentioned_by: string = &quot;&quot;): seq[GiteaIssue]</a></li>
+           mentioned_by: string = &quot;&quot;; sort: string = &quot;&quot;; direction: string = &quot;&quot;): seq[
+    GiteaIssue]</a></li>
           </ul></dd>
 <dt><a name="listLabels" href="#listLabels"><span>listLabels:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -346,13 +348,13 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
                  state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
-                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
-                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
-    GiteaPullRequest]" href="leafy.html#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring">leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
+                 sort: string = &quot;&quot;; direction: string = &quot;&quot;;
+                 milestone: Option[int] = none(int); labels: seq[int] = @[];
+                 poster: string = &quot;&quot;): seq[GiteaPullRequest]" href="leafy.html#listPullRequests%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D%2Cseq%5Bint%5D%2Cstring">leafy: proc listPullRequests(client: GiteaClient; owner: string; repo: string;
                  state: string = &quot;open&quot;; base_branch: string = &quot;&quot;;
-                 sort: string = &quot;&quot;; milestone: Option[int] = none(int);
-                 labels: seq[int] = @[]; poster: string = &quot;&quot;): seq[
-    GiteaPullRequest]</a></li>
+                 sort: string = &quot;&quot;; direction: string = &quot;&quot;;
+                 milestone: Option[int] = none(int); labels: seq[int] = @[];
+                 poster: string = &quot;&quot;): seq[GiteaPullRequest]</a></li>
           </ul></dd>
 <dt><a name="listReleases" href="#listReleases"><span>listReleases:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -430,7 +432,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-17 23:09:37 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-19 22:15:42 UTC</small>
       </div>
     </div>
   </div>
