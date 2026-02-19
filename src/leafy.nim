@@ -527,8 +527,18 @@ proc listIssues*(client: GiteaClient, owner: string, repo: string,
                  labels: string = "", milestone: string = "", assignee: string = "",
                  q: string = "", `type`: string = "", milestones: string = "",
                  since: string = "", before: string = "",
-                 created_by: string = "", assigned_by: string = "", mentioned_by: string = ""): seq[GiteaIssue] =
+                 created_by: string = "", assigned_by: string = "", mentioned_by: string = "",
+                 sort: string = "", direction: string = ""): seq[GiteaIssue] =
   ## List all issues from a repository matching the filters. Paginates internally.
+  ##
+  ## Label filtering supports advanced syntax:
+  ## - ``"bug,feature"`` — issues with both labels
+  ## - ``"-bug"`` — exclude issues with "bug" label
+  ## - ``"bug,-wontfix"`` — has "bug" but not "wontfix"
+  ## - ``"0"`` — only unlabeled issues
+  ##
+  ## ``sort`` can be: oldest, recentupdate, leastupdate, mostcomment, leastcomment, priority.
+  ## ``direction`` can be: asc, desc.
   result = @[]
   var pathBase = &"/repos/{owner}/{repo}/issues?state={state}"
   if labels != "":
@@ -553,6 +563,10 @@ proc listIssues*(client: GiteaClient, owner: string, repo: string,
     pathBase &= &"&assigned_by={assigned_by}"
   if mentioned_by != "":
     pathBase &= &"&mentioned_by={mentioned_by}"
+  if sort != "":
+    pathBase &= &"&sort={sort}"
+  if direction != "":
+    pathBase &= &"&direction={direction}"
   var page = 1
   while true:
     let path = pathBase & &"&page={page}&limit={PageSize}"
@@ -601,15 +615,21 @@ proc deleteIssue*(client: GiteaClient, owner: string, repo: string, issueNumber:
 proc listPullRequests*(client: GiteaClient, owner: string, repo: string,
                       state: string = "open",
                       base_branch: string = "", sort: string = "",
+                      direction: string = "",
                       milestone: Option[int] = none(int),
                       labels: seq[int] = @[], poster: string = ""): seq[GiteaPullRequest] =
   ## List all pull requests from a repository matching the filters. Paginates internally.
+  ##
+  ## ``sort`` can be: oldest, recentupdate, leastupdate, mostcomment, leastcomment, priority.
+  ## ``direction`` can be: asc, desc.
   result = @[]
   var pathBase = &"/repos/{owner}/{repo}/pulls?state={state}"
   if base_branch != "":
     pathBase &= &"&base_branch={base_branch}"
   if sort != "":
     pathBase &= &"&sort={sort}"
+  if direction != "":
+    pathBase &= &"&direction={direction}"
   if milestone.isSome:
     pathBase &= &"&milestone={milestone.get()}"
   if labels.len > 0:
