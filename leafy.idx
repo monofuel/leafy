@@ -12,72 +12,84 @@ nim	GiteaPullRequest	leafy.html#GiteaPullRequest	type GiteaPullRequest		115
 nim	PullRequestBranch	leafy.html#PullRequestBranch	type PullRequestBranch		142
 nim	GiteaComment	leafy.html#GiteaComment	type GiteaComment		148
 nim	GiteaRelease	leafy.html#GiteaRelease	type GiteaRelease		160
-nim	CreateRepositoryPayload	leafy.html#CreateRepositoryPayload	type CreateRepositoryPayload		177
-nim	CreateIssuePayload	leafy.html#CreateIssuePayload	type CreateIssuePayload		188
-nim	EditIssuePayload	leafy.html#EditIssuePayload	type EditIssuePayload		199
-nim	CreatePullRequestPayload	leafy.html#CreatePullRequestPayload	type CreatePullRequestPayload		210
-nim	EditPullRequestPayload	leafy.html#EditPullRequestPayload	type EditPullRequestPayload		223
-nim	CreateCommentPayload	leafy.html#CreateCommentPayload	type CreateCommentPayload		235
-nim	CreateLabelPayload	leafy.html#CreateLabelPayload	type CreateLabelPayload		238
-nim	EditLabelPayload	leafy.html#EditLabelPayload	type EditLabelPayload		245
-nim	CreateMilestonePayload	leafy.html#CreateMilestonePayload	type CreateMilestonePayload		252
-nim	AddLabelsPayload	leafy.html#AddLabelsPayload	type AddLabelsPayload		258
-nim	GiteaClient	leafy.html#GiteaClient	type GiteaClient		261
-nim	newGiteaClient	leafy.html#newGiteaClient,string,string	proc newGiteaClient(baseUrl: string; token: string = ""): GiteaClient		288
-nim	close	leafy.html#close,GiteaClient	proc close(client: GiteaClient)		305
-nim	get	leafy.html#get,GiteaClient,string	proc get(client: GiteaClient; path: string): Response		309
-nim	post	leafy.html#post,GiteaClient,string,string	proc post(client: GiteaClient; path: string; body: string): Response		324
-nim	dispatchWorkflow	leafy.html#dispatchWorkflow,GiteaClient,string,string,string,string,Table[string,string]	proc dispatchWorkflow(client: GiteaClient; owner: string; repo: string;\n                 workflow: string; gitRef: string = "main";\n                 inputs: Table[string, string] = initTable[string, string]())		344
-nim	put	leafy.html#put,GiteaClient,string,string	proc put(client: GiteaClient; path: string; body: string): Response		367
-nim	patch	leafy.html#patch,GiteaClient,string,string	proc patch(client: GiteaClient; path: string; body: string): Response		383
-nim	delete	leafy.html#delete,GiteaClient,string	proc delete(client: GiteaClient; path: string): Response		399
-nim	getCurrentUser	leafy.html#getCurrentUser,GiteaClient	proc getCurrentUser(client: GiteaClient): GiteaUser		416
-nim	getUser	leafy.html#getUser,GiteaClient,string	proc getUser(client: GiteaClient; username: string): GiteaUser		421
-nim	searchUsers	leafy.html#searchUsers,GiteaClient,string	proc searchUsers(client: GiteaClient; query: string): seq[GiteaUser]		426
-nim	checkRepository	leafy.html#checkRepository,GiteaClient,string,string	proc checkRepository(client: GiteaClient; owner: string; repo: string): bool		443
-nim	getRepository	leafy.html#getRepository,GiteaClient,string,string	proc getRepository(client: GiteaClient; owner: string; repo: string): GiteaRepository		452
-nim	listUserRepositories	leafy.html#listUserRepositories,GiteaClient,string	proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]		457
-nim	listCurrentUserRepositories	leafy.html#listCurrentUserRepositories,GiteaClient	proc listCurrentUserRepositories(client: GiteaClient): seq[GiteaRepository]		471
-nim	listOrganizationRepositories	leafy.html#listOrganizationRepositories,GiteaClient,string	proc listOrganizationRepositories(client: GiteaClient; org: string): seq[\n    GiteaRepository]		485
-nim	createRepository	leafy.html#createRepository,GiteaClient,CreateRepositoryPayload	proc createRepository(client: GiteaClient; payload: CreateRepositoryPayload): GiteaRepository		499
-nim	createOrganizationRepository	leafy.html#createOrganizationRepository,GiteaClient,string,CreateRepositoryPayload	proc createOrganizationRepository(client: GiteaClient; org: string;\n                             payload: CreateRepositoryPayload): GiteaRepository		505
-nim	deleteRepository	leafy.html#deleteRepository,GiteaClient,string,string	proc deleteRepository(client: GiteaClient; owner: string; repo: string)		511
-nim	forkRepository	leafy.html#forkRepository,GiteaClient,string,string,string	proc forkRepository(client: GiteaClient; owner: string; repo: string;\n               organization: string = ""): GiteaRepository		515
-nim	listIssues	leafy.html#listIssues,GiteaClient,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string	proc listIssues(client: GiteaClient; owner: string; repo: string;\n           state: string = "open"; labels: string = ""; milestone: string = "";\n           assignee: string = ""; q: string = ""; type: string = "";\n           milestones: string = ""; since: string = ""; before: string = "";\n           created_by: string = ""; assigned_by: string = "";\n           mentioned_by: string = ""; sort: string = ""; direction: string = ""): seq[\n    GiteaIssue]		525
-nim	getIssue	leafy.html#getIssue,GiteaClient,string,string,int	proc getIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		582
-nim	createIssue	leafy.html#createIssue,GiteaClient,string,string,CreateIssuePayload	proc createIssue(client: GiteaClient; owner: string; repo: string;\n            payload: CreateIssuePayload): GiteaIssue		587
-nim	editIssue	leafy.html#editIssue,GiteaClient,string,string,int,EditIssuePayload	proc editIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int;\n          payload: EditIssuePayload): GiteaIssue		593
-nim	closeIssue	leafy.html#closeIssue,GiteaClient,string,string,int	proc closeIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		599
-nim	reopenIssue	leafy.html#reopenIssue,GiteaClient,string,string,int	proc reopenIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		604
-nim	deleteIssue	leafy.html#deleteIssue,GiteaClient,string,string,int	proc deleteIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int)		609
-nim	listPullRequests	leafy.html#listPullRequests,GiteaClient,string,string,string,string,string,string,Option[int],seq[int],string	proc listPullRequests(client: GiteaClient; owner: string; repo: string;\n                 state: string = "open"; base_branch: string = "";\n                 sort: string = ""; direction: string = "";\n                 milestone: Option[int] = none(int); labels: seq[int] = @[];\n                 poster: string = ""): seq[GiteaPullRequest]		615
-nim	getPullRequest	leafy.html#getPullRequest,GiteaClient,string,string,int	proc getPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int): GiteaPullRequest		652
-nim	createPullRequest	leafy.html#createPullRequest,GiteaClient,string,string,CreatePullRequestPayload	proc createPullRequest(client: GiteaClient; owner: string; repo: string;\n                  payload: CreatePullRequestPayload): GiteaPullRequest		657
-nim	editPullRequest	leafy.html#editPullRequest,GiteaClient,string,string,int,EditPullRequestPayload	proc editPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int;\n                payload: EditPullRequestPayload): GiteaPullRequest		663
-nim	mergePullRequest	leafy.html#mergePullRequest,GiteaClient,string,string,int,string,string,string,Option[bool],Option[bool],Option[string],Option[bool]	proc mergePullRequest(client: GiteaClient; owner: string; repo: string;\n                 prNumber: int; mergeMethod: string = "merge";\n                 title: string = ""; message: string = "";\n                 deleteBranchAfterMerge: Option[bool] = none(bool);\n                 forceMerge: Option[bool] = none(bool);\n                 headCommitId: Option[string] = none(string);\n                 mergeWhenChecksSucceed: Option[bool] = none(bool))		669
-nim	listIssueComments	leafy.html#listIssueComments,GiteaClient,string,string,int,string,string	proc listIssueComments(client: GiteaClient; owner: string; repo: string;\n                  issueNumber: int; since: string = ""; before: string = ""): seq[\n    GiteaComment]		693
-nim	createIssueComment	leafy.html#createIssueComment,GiteaClient,string,string,int,CreateCommentPayload	proc createIssueComment(client: GiteaClient; owner: string; repo: string;\n                   issueNumber: int; payload: CreateCommentPayload): GiteaComment		719
-nim	editIssueComment	leafy.html#editIssueComment,GiteaClient,string,string,int,CreateCommentPayload	proc editIssueComment(client: GiteaClient; owner: string; repo: string;\n                 commentId: int; payload: CreateCommentPayload): GiteaComment		725
-nim	deleteIssueComment	leafy.html#deleteIssueComment,GiteaClient,string,string,int	proc deleteIssueComment(client: GiteaClient; owner: string; repo: string;\n                   commentId: int)		731
-nim	listLabels	leafy.html#listLabels,GiteaClient,string,string	proc listLabels(client: GiteaClient; owner: string; repo: string): seq[GiteaLabel]		737
-nim	getLabel	leafy.html#getLabel,GiteaClient,string,string,int	proc getLabel(client: GiteaClient; owner: string; repo: string; labelId: int): GiteaLabel		751
-nim	createLabel	leafy.html#createLabel,GiteaClient,string,string,CreateLabelPayload	proc createLabel(client: GiteaClient; owner: string; repo: string;\n            payload: CreateLabelPayload): GiteaLabel		756
-nim	editLabel	leafy.html#editLabel,GiteaClient,string,string,int,EditLabelPayload	proc editLabel(client: GiteaClient; owner: string; repo: string; labelId: int;\n          payload: EditLabelPayload): GiteaLabel		762
-nim	deleteLabel	leafy.html#deleteLabel,GiteaClient,string,string,int	proc deleteLabel(client: GiteaClient; owner: string; repo: string; labelId: int)		768
-nim	addLabelsToIssue	leafy.html#addLabelsToIssue,GiteaClient,string,string,int,seq[string]	proc addLabelsToIssue(client: GiteaClient; owner: string; repo: string;\n                 issueNumber: int; labels: seq[string])		772
-nim	removeLabelFromIssue	leafy.html#removeLabelFromIssue,GiteaClient,string,string,int,int	proc removeLabelFromIssue(client: GiteaClient; owner: string; repo: string;\n                     issueNumber: int; labelId: int)		778
-nim	removeLabelsFromIssue	leafy.html#removeLabelsFromIssue,GiteaClient,string,string,int,seq[string]	proc removeLabelsFromIssue(client: GiteaClient; owner: string; repo: string;\n                      issueNumber: int; labelNames: seq[string])		782
-nim	listMilestones	leafy.html#listMilestones,GiteaClient,string,string,string,string	proc listMilestones(client: GiteaClient; owner: string; repo: string;\n               state: string = "open"; name: string = ""): seq[GiteaMilestone]		799
-nim	getMilestone	leafy.html#getMilestone,GiteaClient,string,string,int	proc getMilestone(client: GiteaClient; owner: string; repo: string; milestoneId: int): GiteaMilestone		818
-nim	createMilestone	leafy.html#createMilestone,GiteaClient,string,string,CreateMilestonePayload	proc createMilestone(client: GiteaClient; owner: string; repo: string;\n                payload: CreateMilestonePayload): GiteaMilestone		823
-nim	deleteMilestone	leafy.html#deleteMilestone,GiteaClient,string,string,int	proc deleteMilestone(client: GiteaClient; owner: string; repo: string;\n                milestoneId: int)		829
-nim	listReleases	leafy.html#listReleases,GiteaClient,string,string,Option[bool],Option[bool]	proc listReleases(client: GiteaClient; owner: string; repo: string;\n             draft: Option[bool] = none(bool);\n             pre_release: Option[bool] = none(bool)): seq[GiteaRelease]		835
-nim	getRelease	leafy.html#getRelease,GiteaClient,string,string,int	proc getRelease(client: GiteaClient; owner: string; repo: string; releaseId: int): GiteaRelease		862
-nim	getReleaseByTag	leafy.html#getReleaseByTag,GiteaClient,string,string,string	proc getReleaseByTag(client: GiteaClient; owner: string; repo: string; tag: string): GiteaRelease		867
-nim	getLatestRelease	leafy.html#getLatestRelease,GiteaClient,string,string	proc getLatestRelease(client: GiteaClient; owner: string; repo: string): GiteaRelease		872
-nim	listOrganizations	leafy.html#listOrganizations,GiteaClient	proc listOrganizations(client: GiteaClient): seq[GiteaOrganization]		879
-nim	getOrganization	leafy.html#getOrganization,GiteaClient,string	proc getOrganization(client: GiteaClient; org: string): GiteaOrganization		893
-nim	listOrganizationMembers	leafy.html#listOrganizationMembers,GiteaClient,string	proc listOrganizationMembers(client: GiteaClient; org: string): seq[GiteaUser]		898
-nim	`$`	leafy.html#$,GiteaIssue	proc `$`(issue: GiteaIssue): string		914
-nim	`$`	leafy.html#$,GiteaPullRequest	proc `$`(pr: GiteaPullRequest): string		938
-nimgrp	$	leafy.html#$-procs-all	proc		914
+nim	GiteaActionRun	leafy.html#GiteaActionRun	type GiteaActionRun		176
+nim	GiteaActionJob	leafy.html#GiteaActionJob	type GiteaActionJob		193
+nim	GiteaActionArtifact	leafy.html#GiteaActionArtifact	type GiteaActionArtifact		205
+nim	CreateRepositoryPayload	leafy.html#CreateRepositoryPayload	type CreateRepositoryPayload		216
+nim	CreateIssuePayload	leafy.html#CreateIssuePayload	type CreateIssuePayload		227
+nim	EditIssuePayload	leafy.html#EditIssuePayload	type EditIssuePayload		238
+nim	CreatePullRequestPayload	leafy.html#CreatePullRequestPayload	type CreatePullRequestPayload		249
+nim	EditPullRequestPayload	leafy.html#EditPullRequestPayload	type EditPullRequestPayload		262
+nim	CreateCommentPayload	leafy.html#CreateCommentPayload	type CreateCommentPayload		274
+nim	CreateLabelPayload	leafy.html#CreateLabelPayload	type CreateLabelPayload		277
+nim	EditLabelPayload	leafy.html#EditLabelPayload	type EditLabelPayload		284
+nim	CreateMilestonePayload	leafy.html#CreateMilestonePayload	type CreateMilestonePayload		291
+nim	AddLabelsPayload	leafy.html#AddLabelsPayload	type AddLabelsPayload		297
+nim	GiteaClient	leafy.html#GiteaClient	type GiteaClient		300
+nim	newGiteaClient	leafy.html#newGiteaClient,string,string	proc newGiteaClient(baseUrl: string; token: string = ""): GiteaClient		327
+nim	close	leafy.html#close,GiteaClient	proc close(client: GiteaClient)		344
+nim	get	leafy.html#get,GiteaClient,string	proc get(client: GiteaClient; path: string): Response		348
+nim	post	leafy.html#post,GiteaClient,string,string	proc post(client: GiteaClient; path: string; body: string): Response		363
+nim	dispatchWorkflow	leafy.html#dispatchWorkflow,GiteaClient,string,string,string,string,Table[string,string]	proc dispatchWorkflow(client: GiteaClient; owner: string; repo: string;\n                 workflow: string; gitRef: string = "main";\n                 inputs: Table[string, string] = initTable[string, string]())		383
+nim	listActionRuns	leafy.html#listActionRuns,GiteaClient,string,string,string,string,string,string,string,Option[int]	proc listActionRuns(client: GiteaClient; owner: string; repo: string;\n               actor: string = ""; branch: string = ""; event: string = "";\n               status: string = ""; headSha: string = "";\n               workflowId: Option[int] = none(int)): seq[GiteaActionRun]		406
+nim	getActionRun	leafy.html#getActionRun,GiteaClient,string,string,int	proc getActionRun(client: GiteaClient; owner: string; repo: string; runId: int): GiteaActionRun		449
+nim	listActionRunJobs	leafy.html#listActionRunJobs,GiteaClient,string,string,int	proc listActionRunJobs(client: GiteaClient; owner: string; repo: string; runId: int): seq[\n    GiteaActionJob]		454
+nim	listActionJobs	leafy.html#listActionJobs,GiteaClient,string,string,string	proc listActionJobs(client: GiteaClient; owner: string; repo: string;\n               status: string = ""): seq[GiteaActionJob]		475
+nim	getActionJob	leafy.html#getActionJob,GiteaClient,string,string,int	proc getActionJob(client: GiteaClient; owner: string; repo: string; jobId: int): GiteaActionJob		499
+nim	getActionJobLogs	leafy.html#getActionJobLogs,GiteaClient,string,string,int	proc getActionJobLogs(client: GiteaClient; owner: string; repo: string; jobId: int): string		504
+nim	listArtifacts	leafy.html#listArtifacts,GiteaClient,string,string,string	proc listArtifacts(client: GiteaClient; owner: string; repo: string;\n              name: string = ""): seq[GiteaActionArtifact]		509
+nim	getArtifact	leafy.html#getArtifact,GiteaClient,string,string,int	proc getArtifact(client: GiteaClient; owner: string; repo: string; artifactId: int): GiteaActionArtifact		533
+nim	listRunArtifacts	leafy.html#listRunArtifacts,GiteaClient,string,string,int	proc listRunArtifacts(client: GiteaClient; owner: string; repo: string; runId: int): seq[\n    GiteaActionArtifact]		538
+nim	put	leafy.html#put,GiteaClient,string,string	proc put(client: GiteaClient; path: string; body: string): Response		559
+nim	patch	leafy.html#patch,GiteaClient,string,string	proc patch(client: GiteaClient; path: string; body: string): Response		575
+nim	delete	leafy.html#delete,GiteaClient,string	proc delete(client: GiteaClient; path: string): Response		591
+nim	getCurrentUser	leafy.html#getCurrentUser,GiteaClient	proc getCurrentUser(client: GiteaClient): GiteaUser		608
+nim	getUser	leafy.html#getUser,GiteaClient,string	proc getUser(client: GiteaClient; username: string): GiteaUser		613
+nim	searchUsers	leafy.html#searchUsers,GiteaClient,string	proc searchUsers(client: GiteaClient; query: string): seq[GiteaUser]		618
+nim	checkRepository	leafy.html#checkRepository,GiteaClient,string,string	proc checkRepository(client: GiteaClient; owner: string; repo: string): bool		635
+nim	getRepository	leafy.html#getRepository,GiteaClient,string,string	proc getRepository(client: GiteaClient; owner: string; repo: string): GiteaRepository		644
+nim	listUserRepositories	leafy.html#listUserRepositories,GiteaClient,string	proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]		649
+nim	listCurrentUserRepositories	leafy.html#listCurrentUserRepositories,GiteaClient	proc listCurrentUserRepositories(client: GiteaClient): seq[GiteaRepository]		663
+nim	listOrganizationRepositories	leafy.html#listOrganizationRepositories,GiteaClient,string	proc listOrganizationRepositories(client: GiteaClient; org: string): seq[\n    GiteaRepository]		677
+nim	createRepository	leafy.html#createRepository,GiteaClient,CreateRepositoryPayload	proc createRepository(client: GiteaClient; payload: CreateRepositoryPayload): GiteaRepository		691
+nim	createOrganizationRepository	leafy.html#createOrganizationRepository,GiteaClient,string,CreateRepositoryPayload	proc createOrganizationRepository(client: GiteaClient; org: string;\n                             payload: CreateRepositoryPayload): GiteaRepository		697
+nim	deleteRepository	leafy.html#deleteRepository,GiteaClient,string,string	proc deleteRepository(client: GiteaClient; owner: string; repo: string)		703
+nim	forkRepository	leafy.html#forkRepository,GiteaClient,string,string,string	proc forkRepository(client: GiteaClient; owner: string; repo: string;\n               organization: string = ""): GiteaRepository		707
+nim	listIssues	leafy.html#listIssues,GiteaClient,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string,string	proc listIssues(client: GiteaClient; owner: string; repo: string;\n           state: string = "open"; labels: string = ""; milestone: string = "";\n           assignee: string = ""; q: string = ""; type: string = "";\n           milestones: string = ""; since: string = ""; before: string = "";\n           created_by: string = ""; assigned_by: string = "";\n           mentioned_by: string = ""; sort: string = ""; direction: string = ""): seq[\n    GiteaIssue]		717
+nim	getIssue	leafy.html#getIssue,GiteaClient,string,string,int	proc getIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		774
+nim	createIssue	leafy.html#createIssue,GiteaClient,string,string,CreateIssuePayload	proc createIssue(client: GiteaClient; owner: string; repo: string;\n            payload: CreateIssuePayload): GiteaIssue		779
+nim	editIssue	leafy.html#editIssue,GiteaClient,string,string,int,EditIssuePayload	proc editIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int;\n          payload: EditIssuePayload): GiteaIssue		785
+nim	closeIssue	leafy.html#closeIssue,GiteaClient,string,string,int	proc closeIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		791
+nim	reopenIssue	leafy.html#reopenIssue,GiteaClient,string,string,int	proc reopenIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int): GiteaIssue		796
+nim	deleteIssue	leafy.html#deleteIssue,GiteaClient,string,string,int	proc deleteIssue(client: GiteaClient; owner: string; repo: string; issueNumber: int)		801
+nim	listPullRequests	leafy.html#listPullRequests,GiteaClient,string,string,string,string,string,string,Option[int],seq[int],string	proc listPullRequests(client: GiteaClient; owner: string; repo: string;\n                 state: string = "open"; base_branch: string = "";\n                 sort: string = ""; direction: string = "";\n                 milestone: Option[int] = none(int); labels: seq[int] = @[];\n                 poster: string = ""): seq[GiteaPullRequest]		807
+nim	getPullRequest	leafy.html#getPullRequest,GiteaClient,string,string,int	proc getPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int): GiteaPullRequest		844
+nim	createPullRequest	leafy.html#createPullRequest,GiteaClient,string,string,CreatePullRequestPayload	proc createPullRequest(client: GiteaClient; owner: string; repo: string;\n                  payload: CreatePullRequestPayload): GiteaPullRequest		849
+nim	editPullRequest	leafy.html#editPullRequest,GiteaClient,string,string,int,EditPullRequestPayload	proc editPullRequest(client: GiteaClient; owner: string; repo: string; prNumber: int;\n                payload: EditPullRequestPayload): GiteaPullRequest		855
+nim	mergePullRequest	leafy.html#mergePullRequest,GiteaClient,string,string,int,string,string,string,Option[bool],Option[bool],Option[string],Option[bool]	proc mergePullRequest(client: GiteaClient; owner: string; repo: string;\n                 prNumber: int; mergeMethod: string = "merge";\n                 title: string = ""; message: string = "";\n                 deleteBranchAfterMerge: Option[bool] = none(bool);\n                 forceMerge: Option[bool] = none(bool);\n                 headCommitId: Option[string] = none(string);\n                 mergeWhenChecksSucceed: Option[bool] = none(bool))		861
+nim	listIssueComments	leafy.html#listIssueComments,GiteaClient,string,string,int,string,string	proc listIssueComments(client: GiteaClient; owner: string; repo: string;\n                  issueNumber: int; since: string = ""; before: string = ""): seq[\n    GiteaComment]		885
+nim	createIssueComment	leafy.html#createIssueComment,GiteaClient,string,string,int,CreateCommentPayload	proc createIssueComment(client: GiteaClient; owner: string; repo: string;\n                   issueNumber: int; payload: CreateCommentPayload): GiteaComment		911
+nim	editIssueComment	leafy.html#editIssueComment,GiteaClient,string,string,int,CreateCommentPayload	proc editIssueComment(client: GiteaClient; owner: string; repo: string;\n                 commentId: int; payload: CreateCommentPayload): GiteaComment		917
+nim	deleteIssueComment	leafy.html#deleteIssueComment,GiteaClient,string,string,int	proc deleteIssueComment(client: GiteaClient; owner: string; repo: string;\n                   commentId: int)		923
+nim	listLabels	leafy.html#listLabels,GiteaClient,string,string	proc listLabels(client: GiteaClient; owner: string; repo: string): seq[GiteaLabel]		929
+nim	getLabel	leafy.html#getLabel,GiteaClient,string,string,int	proc getLabel(client: GiteaClient; owner: string; repo: string; labelId: int): GiteaLabel		943
+nim	createLabel	leafy.html#createLabel,GiteaClient,string,string,CreateLabelPayload	proc createLabel(client: GiteaClient; owner: string; repo: string;\n            payload: CreateLabelPayload): GiteaLabel		948
+nim	editLabel	leafy.html#editLabel,GiteaClient,string,string,int,EditLabelPayload	proc editLabel(client: GiteaClient; owner: string; repo: string; labelId: int;\n          payload: EditLabelPayload): GiteaLabel		954
+nim	deleteLabel	leafy.html#deleteLabel,GiteaClient,string,string,int	proc deleteLabel(client: GiteaClient; owner: string; repo: string; labelId: int)		960
+nim	addLabelsToIssue	leafy.html#addLabelsToIssue,GiteaClient,string,string,int,seq[string]	proc addLabelsToIssue(client: GiteaClient; owner: string; repo: string;\n                 issueNumber: int; labels: seq[string])		964
+nim	removeLabelFromIssue	leafy.html#removeLabelFromIssue,GiteaClient,string,string,int,int	proc removeLabelFromIssue(client: GiteaClient; owner: string; repo: string;\n                     issueNumber: int; labelId: int)		970
+nim	removeLabelsFromIssue	leafy.html#removeLabelsFromIssue,GiteaClient,string,string,int,seq[string]	proc removeLabelsFromIssue(client: GiteaClient; owner: string; repo: string;\n                      issueNumber: int; labelNames: seq[string])		974
+nim	listMilestones	leafy.html#listMilestones,GiteaClient,string,string,string,string	proc listMilestones(client: GiteaClient; owner: string; repo: string;\n               state: string = "open"; name: string = ""): seq[GiteaMilestone]		991
+nim	getMilestone	leafy.html#getMilestone,GiteaClient,string,string,int	proc getMilestone(client: GiteaClient; owner: string; repo: string; milestoneId: int): GiteaMilestone		1010
+nim	createMilestone	leafy.html#createMilestone,GiteaClient,string,string,CreateMilestonePayload	proc createMilestone(client: GiteaClient; owner: string; repo: string;\n                payload: CreateMilestonePayload): GiteaMilestone		1015
+nim	deleteMilestone	leafy.html#deleteMilestone,GiteaClient,string,string,int	proc deleteMilestone(client: GiteaClient; owner: string; repo: string;\n                milestoneId: int)		1021
+nim	listReleases	leafy.html#listReleases,GiteaClient,string,string,Option[bool],Option[bool]	proc listReleases(client: GiteaClient; owner: string; repo: string;\n             draft: Option[bool] = none(bool);\n             pre_release: Option[bool] = none(bool)): seq[GiteaRelease]		1027
+nim	getRelease	leafy.html#getRelease,GiteaClient,string,string,int	proc getRelease(client: GiteaClient; owner: string; repo: string; releaseId: int): GiteaRelease		1054
+nim	getReleaseByTag	leafy.html#getReleaseByTag,GiteaClient,string,string,string	proc getReleaseByTag(client: GiteaClient; owner: string; repo: string; tag: string): GiteaRelease		1059
+nim	getLatestRelease	leafy.html#getLatestRelease,GiteaClient,string,string	proc getLatestRelease(client: GiteaClient; owner: string; repo: string): GiteaRelease		1064
+nim	listOrganizations	leafy.html#listOrganizations,GiteaClient	proc listOrganizations(client: GiteaClient): seq[GiteaOrganization]		1071
+nim	getOrganization	leafy.html#getOrganization,GiteaClient,string	proc getOrganization(client: GiteaClient; org: string): GiteaOrganization		1085
+nim	listOrganizationMembers	leafy.html#listOrganizationMembers,GiteaClient,string	proc listOrganizationMembers(client: GiteaClient; org: string): seq[GiteaUser]		1090
+nim	`$`	leafy.html#$,GiteaIssue	proc `$`(issue: GiteaIssue): string		1106
+nim	`$`	leafy.html#$,GiteaPullRequest	proc `$`(pr: GiteaPullRequest): string		1130
+nimgrp	$	leafy.html#$-procs-all	proc		1106

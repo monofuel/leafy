@@ -204,6 +204,22 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc get(client: GiteaClient; path: string): Response" href="leafy.html#get%2CGiteaClient%2Cstring">leafy: proc get(client: GiteaClient; path: string): Response</a></li>
           </ul></dd>
+<dt><a name="getActionJob" href="#getActionJob"><span>getActionJob:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc getActionJob(client: GiteaClient; owner: string; repo: string; jobId: int): GiteaActionJob" href="leafy.html#getActionJob%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc getActionJob(client: GiteaClient; owner: string; repo: string; jobId: int): GiteaActionJob</a></li>
+          </ul></dd>
+<dt><a name="getActionJobLogs" href="#getActionJobLogs"><span>getActionJobLogs:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc getActionJobLogs(client: GiteaClient; owner: string; repo: string; jobId: int): string" href="leafy.html#getActionJobLogs%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc getActionJobLogs(client: GiteaClient; owner: string; repo: string; jobId: int): string</a></li>
+          </ul></dd>
+<dt><a name="getActionRun" href="#getActionRun"><span>getActionRun:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc getActionRun(client: GiteaClient; owner: string; repo: string; runId: int): GiteaActionRun" href="leafy.html#getActionRun%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc getActionRun(client: GiteaClient; owner: string; repo: string; runId: int): GiteaActionRun</a></li>
+          </ul></dd>
+<dt><a name="getArtifact" href="#getArtifact"><span>getArtifact:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc getArtifact(client: GiteaClient; owner: string; repo: string; artifactId: int): GiteaActionArtifact" href="leafy.html#getArtifact%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc getArtifact(client: GiteaClient; owner: string; repo: string; artifactId: int): GiteaActionArtifact</a></li>
+          </ul></dd>
 <dt><a name="getCurrentUser" href="#getCurrentUser"><span>getCurrentUser:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc getCurrentUser(client: GiteaClient): GiteaUser" href="leafy.html#getCurrentUser%2CGiteaClient">leafy: proc getCurrentUser(client: GiteaClient): GiteaUser</a></li>
@@ -248,6 +264,18 @@
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc getUser(client: GiteaClient; username: string): GiteaUser" href="leafy.html#getUser%2CGiteaClient%2Cstring">leafy: proc getUser(client: GiteaClient; username: string): GiteaUser</a></li>
           </ul></dd>
+<dt><a name="GiteaActionArtifact" href="#GiteaActionArtifact"><span>GiteaActionArtifact:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: type GiteaActionArtifact" href="leafy.html#GiteaActionArtifact">leafy: type GiteaActionArtifact</a></li>
+          </ul></dd>
+<dt><a name="GiteaActionJob" href="#GiteaActionJob"><span>GiteaActionJob:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: type GiteaActionJob" href="leafy.html#GiteaActionJob">leafy: type GiteaActionJob</a></li>
+          </ul></dd>
+<dt><a name="GiteaActionRun" href="#GiteaActionRun"><span>GiteaActionRun:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: type GiteaActionRun" href="leafy.html#GiteaActionRun">leafy: type GiteaActionRun</a></li>
+          </ul></dd>
 <dt><a name="GiteaClient" href="#GiteaClient"><span>GiteaClient:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: type GiteaClient" href="leafy.html#GiteaClient">leafy: type GiteaClient</a></li>
@@ -291,6 +319,34 @@
 <dt><a name="GiteaUser" href="#GiteaUser"><span>GiteaUser:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: type GiteaUser" href="leafy.html#GiteaUser">leafy: type GiteaUser</a></li>
+          </ul></dd>
+<dt><a name="listActionJobs" href="#listActionJobs"><span>listActionJobs:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc listActionJobs(client: GiteaClient; owner: string; repo: string;
+               status: string = &quot;&quot;): seq[GiteaActionJob]" href="leafy.html#listActionJobs%2CGiteaClient%2Cstring%2Cstring%2Cstring">leafy: proc listActionJobs(client: GiteaClient; owner: string; repo: string;
+               status: string = &quot;&quot;): seq[GiteaActionJob]</a></li>
+          </ul></dd>
+<dt><a name="listActionRunJobs" href="#listActionRunJobs"><span>listActionRunJobs:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc listActionRunJobs(client: GiteaClient; owner: string; repo: string; runId: int): seq[
+    GiteaActionJob]" href="leafy.html#listActionRunJobs%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc listActionRunJobs(client: GiteaClient; owner: string; repo: string; runId: int): seq[
+    GiteaActionJob]</a></li>
+          </ul></dd>
+<dt><a name="listActionRuns" href="#listActionRuns"><span>listActionRuns:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc listActionRuns(client: GiteaClient; owner: string; repo: string;
+               actor: string = &quot;&quot;; branch: string = &quot;&quot;; event: string = &quot;&quot;;
+               status: string = &quot;&quot;; headSha: string = &quot;&quot;;
+               workflowId: Option[int] = none(int)): seq[GiteaActionRun]" href="leafy.html#listActionRuns%2CGiteaClient%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2Cstring%2COption%5Bint%5D">leafy: proc listActionRuns(client: GiteaClient; owner: string; repo: string;
+               actor: string = &quot;&quot;; branch: string = &quot;&quot;; event: string = &quot;&quot;;
+               status: string = &quot;&quot;; headSha: string = &quot;&quot;;
+               workflowId: Option[int] = none(int)): seq[GiteaActionRun]</a></li>
+          </ul></dd>
+<dt><a name="listArtifacts" href="#listArtifacts"><span>listArtifacts:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc listArtifacts(client: GiteaClient; owner: string; repo: string;
+              name: string = &quot;&quot;): seq[GiteaActionArtifact]" href="leafy.html#listArtifacts%2CGiteaClient%2Cstring%2Cstring%2Cstring">leafy: proc listArtifacts(client: GiteaClient; owner: string; repo: string;
+              name: string = &quot;&quot;): seq[GiteaActionArtifact]</a></li>
           </ul></dd>
 <dt><a name="listCurrentUserRepositories" href="#listCurrentUserRepositories"><span>listCurrentUserRepositories:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -364,6 +420,12 @@
              draft: Option[bool] = none(bool);
              pre_release: Option[bool] = none(bool)): seq[GiteaRelease]</a></li>
           </ul></dd>
+<dt><a name="listRunArtifacts" href="#listRunArtifacts"><span>listRunArtifacts:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="leafy: proc listRunArtifacts(client: GiteaClient; owner: string; repo: string; runId: int): seq[
+    GiteaActionArtifact]" href="leafy.html#listRunArtifacts%2CGiteaClient%2Cstring%2Cstring%2Cint">leafy: proc listRunArtifacts(client: GiteaClient; owner: string; repo: string; runId: int): seq[
+    GiteaActionArtifact]</a></li>
+          </ul></dd>
 <dt><a name="listUserRepositories" href="#listUserRepositories"><span>listUserRepositories:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="leafy: proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]" href="leafy.html#listUserRepositories%2CGiteaClient%2Cstring">leafy: proc listUserRepositories(client: GiteaClient; username: string): seq[GiteaRepository]</a></li>
@@ -432,7 +494,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-19 22:15:42 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-02-19 22:31:50 UTC</small>
       </div>
     </div>
   </div>
